@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     boolean isPlayVideo = false;
     boolean isPausedVideo = false;
     boolean isProgressVideo = false;
-    int timeOption = 3;
+    int timeOption = 3 * 100;
     long millisCurr = 0;
     int currPossition = 0;
     //    CountdownTimerHandle handleTime;
@@ -112,13 +112,12 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             public void onFinish() {
 //                handleTime.cancel();
                 countDownTimer.cancel();
-                if (currVideo == arrList.size()) {
+                if (currArray == 6 && Currentperiod == 1299) {
                     isProgressVideo = false;
                     circleProgress1.setText("00:00");
                     currVideo = 0;
                 } else {
                     isProgressVideo = true;
-
                     circleProgress1.setText("Next");
 
                 }
@@ -178,9 +177,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    public void ResetView() {
-
-    }
 
     @Override
     protected void onResume() {
@@ -248,7 +244,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 SetTimeCountDown(millisToGo);
                 mHandler.removeCallbacks(mTimer);
                 mHandler.removeCallbacksAndMessages(mTimer);
-                setTimerProgres();
+                setTimerProgres(timeOption);
 
                 break;
             case R.id.imgPause:
@@ -272,7 +268,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
                 break;
             case R.id.btnOption1:
-                timeOption = 3;
+                timeOption = 300;
                 currVideo = 0;
                 progress = 0;
                 mHandler.removeCallbacks(mTimer);
@@ -282,12 +278,12 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 //                handleTime.cancel();
                 setTimeAction(0);
                 circleProgress1.resetProgressBar();
-                setTimerProgres();
+                setTimerProgres(timeOption);
                 btnOption1.setBackgroundResource(R.drawable.background_button_selected);
                 btnOption2.setBackgroundResource(R.drawable.background_button_none);
                 btnOption1.setTextColor(Color.BLACK);
                 btnOption2.setTextColor(Color.WHITE);
-                playVideo(arrList.get(currVideo));
+                playVideo(arrList.get(0));
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -295,7 +291,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 break;
 
             case R.id.btnOption2:
-                timeOption = 4;
+                timeOption = 400;
                 currVideo = 0;
                 progress = 0;
                 mHandler.removeCallbacks(mTimer);
@@ -305,12 +301,12 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 //                handleTime.cancel();
                 setTimeAction(0);
                 circleProgress1.resetProgressBar();
-                setTimerProgres();
+                setTimerProgres(timeOption);
                 btnOption2.setBackgroundResource(R.drawable.background_button_selected);
                 btnOption1.setBackgroundResource(R.drawable.background_button_none);
                 btnOption2.setTextColor(Color.BLACK);
                 btnOption1.setTextColor(Color.WHITE);
-                playVideo(arrList.get(currVideo));
+                playVideo(arrList.get(0));
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -326,14 +322,12 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
     }
 
-    Thread myThread;
-
-    private void setTimerProgres() {
+    private void setTimerProgres(final int _timeProcess) {
         mTimer = new Runnable() {
             @Override
             public void run() {
                 progress += 1;
-                if (progress <= 100 * 3)
+                if (progress <= _timeProcess)
                     runOnUiThread(new Runnable() {
 
                         @Override
@@ -347,31 +341,26 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                                     mHandler.removeCallbacksAndMessages(mTimer);
                                     mHandler.removeMessages(0);
                                     mHandler = new Handler();
+
                                     circleProgress1.clearAnimation();
 
                                     circleProgress1.resetProgressBar();
-                                    setTimerProgres();
                                     setTimeAction(currArray);
+                                    setTimerProgres(timeOption*30);
+
                                 }else {
                                     circleProgress1.setProgress(progress);
 
                                 }
-
-
                             }
                         }
                     });
-                mHandler.postDelayed(this, 100 * 3);
-
+                mHandler.postDelayed(this, _timeProcess);
                //
             }
 
         };
         mHandler.postDelayed(mTimer, 1000);
-
-
-
-
     }
 
     //play video by url
@@ -385,7 +374,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     //play all video in disk
     @Override
     public void onCompletion(MediaPlayer mp) {
-
             currVideo = 0;
             if(Currentperiod < 100 && Currentperiod > 0){
                 currArray = 0;
@@ -401,7 +389,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 playVideo(arrList1.get(currVideo));
                 mVideoView.requestFocus();
                 mVideoView.start();
-
                 setTimeAction(currArray);
 
             }
@@ -413,11 +400,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 mVideoView.requestFocus();
                 mVideoView.start();
                 setTimeAction(currArray);
-
-
             }
-//
- else if(Currentperiod >= 300 && Currentperiod < 400){
+            else if(Currentperiod >= 300 && Currentperiod < 400){
                 currArray = 2;
                 currVideo ++;
                 playVideo(arrList2.get(currVideo));
@@ -491,7 +475,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 mVideoView.start();
                 setTimeAction(currArray);
             }
- else{
+            else{
                 imgPlay.setVisibility(View.VISIBLE);
                 imgPause.setVisibility(View.GONE);
                 mVideoView.stopPlayback();
@@ -539,7 +523,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             mHandler.removeCallbacksAndMessages(mTimer);
             mHandler = new Handler();
             circleProgress1.resetProgressBar();
-            setTimerProgres();
+            setTimerProgres(timeOption);
             if(currArray == 0){
                 currVideo ++;
                 playVideo(arrList.get(currVideo));
@@ -641,7 +625,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             mHandler.removeCallbacksAndMessages(mTimer);
             mHandler = new Handler();
             circleProgress1.resetProgressBar();
-            setTimerProgres();
+            setTimerProgres(timeOption);
             if(currArray == 0){
                 currVideo ++;
                 playVideo(arrList.get(currVideo));
