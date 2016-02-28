@@ -53,6 +53,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     int millisToGo = 0 * 1000 + 7 * 1000 * 60;
     int currVideo = 0;
     MediaPlayer mPlayer;
+    MediaPlayer mPlayerStart;
+    MediaPlayer mPlayerFinish;
     MediaPlayer mPlayerNextPreview;
     ArrayList<String> arrList = new ArrayList<String>();
     ArrayList<String> arrList1 = new ArrayList<String>();
@@ -130,10 +132,16 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         imgPause.setOnClickListener(this);
         btnOption1.setOnClickListener(this);
         btnOption2.setOnClickListener(this);
+        btnOption1.setBackgroundResource(R.drawable.background_button_selected);
+        btnOption2.setBackgroundResource(R.drawable.background_button_none);
+        btnOption1.setTextColor(Color.BLACK);
+        btnOption2.setTextColor(Color.WHITE);
 
         circleProgress1.setStartPositionInDegrees(ProgressStartPoint.DEFAULT);
         circleProgress1.setLinearGradientProgress(true);
         circleProgress1.setOnClickListener(this);
+        circleProgress1.setTextSize(100);
+        circleProgress1.setTextColor(Color.WHITE);
         circleProgress1.setOnProgressViewListener(new OnProgressViewListener() {
             @Override
             public void onFinish() {
@@ -146,12 +154,11 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     circleProgress1.setText("00:00");
                     updateUIHandler = new Handler();
                     currVideo = 0;
+                    mPlayerFinish.start();
                 } else {
                     isProgressVideo = true;
                     circleProgress1.setText("00:00");
                     circleProgress1.resetProgressBar();
-
-
                 }
 
             }
@@ -165,6 +172,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         mPlayer = MediaPlayer.create(this, R.raw.music);
         mPlayer.setLooping(true);
         mPlayerNextPreview = MediaPlayer.create(this, R.raw.forwardback);
+        mPlayerStart = MediaPlayer.create(this, R.raw.start);
+        mPlayerFinish = MediaPlayer.create(this, R.raw.finish);
         mVideoView.setOnCompletionListener(this);
 
         for (int i = 0; i < 2; i++) {
@@ -276,6 +285,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             @Override
             public void onFinish() {
                 circleProgress1.setText("00:00");
+
 //                circleProgress1.setProgress(0);
             }
         }.start();
@@ -288,6 +298,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (!isPlayVideo) {
                     playVideo(arrList.get(currVideo));
                     isPlayVideo = true;
+
+                }else{
+                    mPlayerStart.start();
                 }
 
                 if (!mVideoView.isPlaying()) {
@@ -328,6 +341,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             case R.id.imgPause:
                 isPausedVideo = true;
                 isPlayVideo = false;
+                mPlayer.pause();
                 if (mVideoView.isPlaying()) {
                     currPossition = mVideoView.getCurrentPosition();
                     mVideoView.pause();

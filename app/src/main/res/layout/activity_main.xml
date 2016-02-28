@@ -46,6 +46,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="1"
+                    android:textSize="14pt"
+
                     android:textColor="@color/color_white"
                     android:background="@drawable/background_button_none"
                     android:id="@+id/btnOption1" />
@@ -63,6 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="2"
+                    android:textSize="14pt"
                     android:textColor="@color/color_white"
                     android:background="@drawable/background_button_none"
                     android:id="@+id/btnOption2" />
