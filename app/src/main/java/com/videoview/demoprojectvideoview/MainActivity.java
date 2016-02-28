@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -89,10 +91,19 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         public void handleMessage(Message msg) {
             Currentperiod = (Integer.parseInt(msg.obj.toString()));
             progress = msg.what;
-            if(Currentperiod == 201 || Currentperiod == 401  ||Currentperiod == 601 ||Currentperiod == 801||Currentperiod == 1001 ||Currentperiod == 1201){
+            if(Currentperiod == 200 || Currentperiod == 400  ||Currentperiod == 600 ||Currentperiod == 800||Currentperiod == 1000 ||Currentperiod == 1200){
+                progress = 0;
+                circleProgress1.resetProgressBar();
                 Interrupted();
+                if(timeOption == 450){
+                    timeOption = 150;
+                }else if(timeOption == 150){
+                    timeOption = 450;
+                }else if(timeOption == 300){
+                    timeOption = 300;
+                }
             }else {
-                if(Currentperiod == 100 || Currentperiod == 200 || Currentperiod == 300 || Currentperiod == 400 || Currentperiod == 500 || Currentperiod == 600 || Currentperiod == 700 || Currentperiod == 800 || Currentperiod == 900 || Currentperiod == 1000 || Currentperiod == 1100 || Currentperiod == 1200)
+                if(Currentperiod == 100  || Currentperiod == 300|| Currentperiod == 500  || Currentperiod == 700 || Currentperiod == 900 ||  Currentperiod == 1100)
                 {
                     progress = 0;
                     circleProgress1.resetProgressBar();
@@ -105,12 +116,14 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     }
                 }
                 else{
+
                     circleProgress1.setProgress(progress);
                 }
 
 //                circleProgress1.setText("time: "+Currentperiod);
 
             }
+
         }
     };
     /**
@@ -138,23 +151,18 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         btnOption2.setTextColor(Color.WHITE);
 
         circleProgress1.setStartPositionInDegrees(ProgressStartPoint.DEFAULT);
-        circleProgress1.setLinearGradientProgress(true);
         circleProgress1.setOnClickListener(this);
         circleProgress1.setTextSize(100);
-        circleProgress1.setTextColor(Color.WHITE);
+
         circleProgress1.setOnProgressViewListener(new OnProgressViewListener() {
             @Override
             public void onFinish() {
 //                handleTime.cancel();
-                if(mVideoView.isPlaying()){
+                if (mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
                 if (currArray == 6 && Currentperiod == 1299) {
-                    isProgressVideo = false;
-                    circleProgress1.setText("00:00");
-                    updateUIHandler = new Handler();
-                    currVideo = 0;
-                    mPlayerFinish.start();
+
                 } else {
                     isProgressVideo = true;
                     circleProgress1.setText("00:00");
@@ -231,8 +239,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     @Override
     protected void onPause() {
         super.onPause();
-        mHandler.removeCallbacks(mTimer);
-        mHandler.removeCallbacksAndMessages(mTimer);
+//        mHandler.removeCallbacks(mTimer);
+//        mHandler.removeCallbacksAndMessages(mTimer);
     }
     private int mMillisInFuture;
     private void SetTimeCountDown(int millisToGos) {
@@ -253,27 +261,27 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     mMillisInFuture = seconds * 1000 + minutes * 1000 * 60;;
                     String text = String.format("%02d:%02d", minutes, seconds);
                     if(timeOption == 300){
-                        if(seconds > 30 && seconds <= 60){
-                            circleProgress1.setText(text, Color.DKGRAY);
+                        if(seconds >= 31 && seconds <= 60){
+                            circleProgress1.setText(text, Color.WHITE);
                             isProgressVideo = false;
-                        }else if(seconds >= 0 && seconds <= 30){
-                            circleProgress1.setText("Next", Color.DKGRAY);
+                        }else if(seconds >= 0 && seconds <= 31){
+                            circleProgress1.setText("NEXT", Color.WHITE);
                             isProgressVideo = true;
                         }
                     }else if(timeOption == 450){
-                        if(seconds > 15 && seconds <= 60){
-                            circleProgress1.setText(text, Color.DKGRAY);
+                        if(seconds >= 16 && seconds <= 60){
+                            circleProgress1.setText(text, Color.WHITE);
                             isProgressVideo = false;
-                        }else{
-                            circleProgress1.setText("Next", Color.DKGRAY);
+                        }else if(seconds >= 0 && seconds <= 16){
+                            circleProgress1.setText("NEXT", Color.WHITE);
                             isProgressVideo = true;
                         }
                     }else if(timeOption == 150){
-                        if(seconds > 15 && seconds <= 60){
-                            circleProgress1.setText(text, Color.DKGRAY);
+                        if(seconds >= 16 && seconds <= 60){
+                            circleProgress1.setText(text, Color.WHITE);
                             isProgressVideo = false;
-                        }else{
-                            circleProgress1.setText("Next", Color.DKGRAY);
+                        }else  if(seconds >= 0 && seconds <= 16){
+                            circleProgress1.setText("NEXT", Color.WHITE);
                             isProgressVideo = true;
                         }
                     }
@@ -284,7 +292,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
             @Override
             public void onFinish() {
-                circleProgress1.setText("00:00");
+                circleProgress1.setText("00:00", Color.WHITE);
 
 //                circleProgress1.setProgress(0);
             }
@@ -303,12 +311,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     mPlayerStart.start();
                 }
 
-                if (!mVideoView.isPlaying()) {
-
-                    //millisToGo = currentTime;
-                }
                 if(isPausedVideo){
-                    mVideoView.seekTo(currPossition);
+                    mVideoView.seekTo(currPossition + 2);
                     mVideoView.start();
 
                     SetTimeCountDown(mMillisInFuture);
@@ -461,47 +465,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
     }
 
-    private void setTimerProgres(final int _timeProcess) {
-        mTimer = new Runnable() {
-            @Override
-            public void run() {
-                progress += 1;
-                if (progress <= _timeProcess)
-                    runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            if (!isPausedVideo) {
-                                Currentperiod++;
-
-                                if(Currentperiod == 201 || Currentperiod == 401  ||Currentperiod == 601 ||Currentperiod == 801||Currentperiod == 1001 ||Currentperiod == 1201){
-                                    progress = 0;
-                                    mHandler.removeCallbacks(mTimer);
-                                    mHandler.removeCallbacksAndMessages(mTimer);
-                                    mHandler.removeMessages(0);
-                                    mHandler = new Handler();
-
-                                    circleProgress1.clearAnimation();
-
-                                    circleProgress1.resetProgressBar();
-                                    setTimeAction(currArray);
-                                    setTimerProgres(timeOption*30);
-
-                                }else {
-                                    circleProgress1.setProgress(progress);
-
-                                }
-                            }
-                        }
-                    });
-                mHandler.postDelayed(this, _timeProcess);
-               //
-            }
-
-        };
-        mHandler.postDelayed(mTimer, 1000);
-    }
-
     Thread threadTimerProgres = new Thread(new Runnable() {
 
 
@@ -514,6 +477,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     Message msg = updateUIHandler.obtainMessage(1, Currentperiod);
                     msg.what = progress;
                     updateUIHandler.sendMessage(msg);
+
 //                    circleProgress1.setProgress(progress);
                     try {
                         Thread.sleep(timeOption);
@@ -550,114 +514,128 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     //play all video in disk
     @Override
     public void onCompletion(MediaPlayer mp) {
+        autoNextVideo();
+    }
+    public void autoNextVideo(){
+        currVideo = 0;
+        if(Currentperiod < 95 && Currentperiod >= 0){
+            currArray = 0;
+            currVideo ++;
+            playVideo(arrList.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }
+        else if(Currentperiod >= 95 && Currentperiod < 200){
+            currArray = 1;
+            currVideo ++;
+            playVideo(arrList1.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+
+        }
+        else  if(Currentperiod >= 200 && Currentperiod < 295){
+            currArray = 1;
+
+            currVideo ++;
+            playVideo(arrList1.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }
+        else if(Currentperiod >= 295 && Currentperiod < 395){
+            currArray = 2;
+            currVideo ++;
+            playVideo(arrList2.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }else if(Currentperiod >= 395 && Currentperiod < 495){
+            currArray = 2;
+            currVideo ++;
+            playVideo(arrList2.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }else if(Currentperiod >= 495 && Currentperiod < 595){
+            currArray = 3;
+            currVideo ++;
+            playVideo(arrList3.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }
+        else if(Currentperiod >= 595 && Currentperiod < 695){
+            currArray = 3;
+            currVideo ++;
+            playVideo(arrList3.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }
+        else if(Currentperiod >= 695 && Currentperiod < 795){
+            currArray = 4;
+            currVideo ++;
+            playVideo(arrList4.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }else if(Currentperiod >= 795 && Currentperiod < 895){
+            currArray = 4;
+            currVideo ++;
+            playVideo(arrList4.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }
+        else if(Currentperiod >= 895 && Currentperiod < 993){
+            currArray = 5;
+            currVideo ++;
+            playVideo(arrList5.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }else if(Currentperiod >= 993 && Currentperiod < 1090){
+            currArray = 5;
+            currVideo ++;
+            playVideo(arrList5.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }else if(Currentperiod >= 1090 && Currentperiod < 1195){
+            currArray = 6;
+            currVideo ++;
+            playVideo(arrList6.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }else if(Currentperiod >= 1195 && Currentperiod < 1300){
+            currArray = 6;
+            currVideo ++;
+            playVideo(arrList6.get(currVideo));
+            mVideoView.requestFocus();
+            mVideoView.start();
+            setTimeAction(currArray);
+        }
+        else if(Currentperiod >= 1300){
+            Currentperiod = 0;
+            threadTimerProgres.currentThread().interrupt();
+            updateUIHandler = new Handler();
+            isPlayVideo= false;
+            millisToGo = 0 * 1000 + 7 * 1000 * 60;
+            currArray = 0;
             currVideo = 0;
-            if(Currentperiod < 100 && Currentperiod >= 0){
-                currArray = 0;
-                currVideo ++;
-                playVideo(arrList.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }
-            else if(Currentperiod >= 100 && Currentperiod < 200){
-                currArray = 1;
-                currVideo ++;
-                playVideo(arrList1.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-
-            }
-            else  if(Currentperiod >= 200 && Currentperiod < 300){
-                currArray = 1;
-
-                currVideo ++;
-                playVideo(arrList1.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }
-            else if(Currentperiod >= 300 && Currentperiod < 400){
-                currArray = 2;
-                currVideo ++;
-                playVideo(arrList2.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }else if(Currentperiod >= 400 && Currentperiod < 500){
-                currArray = 2;
-                currVideo ++;
-                playVideo(arrList2.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }else if(Currentperiod >= 500 && Currentperiod < 600){
-                currArray = 3;
-                currVideo ++;
-                playVideo(arrList3.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }
-            else if(Currentperiod >= 600 && Currentperiod < 700){
-                currArray = 3;
-                currVideo ++;
-                playVideo(arrList3.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }
-            else if(Currentperiod >= 700 && Currentperiod < 800){
-                currArray = 4;
-                currVideo ++;
-                playVideo(arrList4.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }else if(Currentperiod >= 800 && Currentperiod < 900){
-                currArray = 4;
-                currVideo ++;
-                playVideo(arrList4.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }
-            else if(Currentperiod >= 900 && Currentperiod < 1000){
-                currArray = 5;
-                currVideo ++;
-                playVideo(arrList5.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }else if(Currentperiod >= 1000 && Currentperiod < 1100){
-                currArray = 5;
-                currVideo ++;
-                playVideo(arrList5.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }else if(Currentperiod >= 1100 && Currentperiod < 1200){
-                currArray = 6;
-                currVideo ++;
-                playVideo(arrList6.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }else if(Currentperiod >= 1200 && Currentperiod < 1300){
-                currArray = 6;
-                currVideo ++;
-                playVideo(arrList6.get(currVideo));
-                mVideoView.requestFocus();
-                mVideoView.start();
-                setTimeAction(currArray);
-            }
-            else{
-                imgPlay.setVisibility(View.VISIBLE);
-                imgPause.setVisibility(View.GONE);
-                mVideoView.stopPlayback();
-            }
+            isProgressVideo = false;
+            circleProgress1.setText("00:00", Color.WHITE);
+            mPlayerFinish.start();
+            imgPlay.setVisibility(View.VISIBLE);
+            imgPause.setVisibility(View.GONE);
+            mVideoView.stopPlayback();
+            countDownTimer.cancel();
 
 
+        }
     }
 
     public void setTimeAction(int _currArray) {
@@ -665,26 +643,26 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             millisToGo = 0 * 1000 + 7 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 1 && Currentperiod == 201) {
+        } else if (_currArray == 1 && Currentperiod == 200) {
             millisToGo = 0 * 1000 + 6 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 2 && Currentperiod == 401) {
+        } else if (_currArray == 2 && Currentperiod == 400) {
             millisToGo = 0 * 1000 + 5 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 3 && Currentperiod == 601) {
+        } else if (_currArray == 3 && Currentperiod == 600) {
             millisToGo = 0 * 1000 + 4 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 4 && Currentperiod == 801) {
+        } else if (_currArray == 4 && Currentperiod == 800) {
             millisToGo = 0 * 1000 + 3 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 5 && Currentperiod == 1001) {
+        } else if (_currArray == 5 && Currentperiod == 1000) {
             millisToGo = 0 * 1000 + 2 * 1000 * 60;
             SetTimeCountDown(millisToGo);
-        } else if (_currArray == 6 && Currentperiod == 1201) {
+        } else if (_currArray == 6 && Currentperiod == 1200) {
             millisToGo = 0 * 1000 + 1 * 1000 * 60;
             SetTimeCountDown(millisToGo);
         }
@@ -740,7 +718,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if(isStartThead){
                     countDownTimer.cancel();
                 }
-                Currentperiod = 201;
+                Currentperiod = 200;
                 setTimeAction(currArray);
                 isProgressVideo = false;
 
@@ -758,7 +736,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if(isStartThead){
                     countDownTimer.cancel();
                 }
-                Currentperiod = 401;
+                Currentperiod = 400;
                 setTimeAction(currArray);
                 isProgressVideo = false;
 
@@ -776,7 +754,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if(isStartThead){
                     countDownTimer.cancel();
                 }
-                Currentperiod = 601;
+                Currentperiod = 600;
                 setTimeAction(currArray);
                 isProgressVideo = false;
 
@@ -794,7 +772,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if(isStartThead){
                     countDownTimer.cancel();
                 }
-                Currentperiod = 801;
+                Currentperiod = 800;
                 setTimeAction(currArray);
                 isProgressVideo = false;
 
@@ -812,7 +790,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if(isStartThead){
                     countDownTimer.cancel();
                 }
-                Currentperiod = 1001;
+                Currentperiod = 1000;
                 setTimeAction(currArray);
                 isProgressVideo = false;
 
@@ -831,7 +809,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     countDownTimer.cancel();
                 }
 
-                Currentperiod = 1201;
+                Currentperiod = 1200;
                 setTimeAction(currArray);
                 isProgressVideo = false;
 
@@ -853,14 +831,12 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             mHandler.removeCallbacksAndMessages(mTimer);
             mHandler = new Handler();
             circleProgress1.resetProgressBar();
-//            setTimerProgres(timeOption);
             if(!isStartThead){
                 isStartThead = true;
                 threadTimerProgres.start();
             }else{
                 Interrupted();
             }
-            getCurrentperiod();
             if(currArray == 0){
                 currVideo ++;
                 playVideo(arrList.get(currVideo));
@@ -896,7 +872,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     countDownTimer.cancel();
                 }
 
-                Currentperiod = 201;
+                Currentperiod = 200;
                 setTimeAction(currArray);
                 isProgressVideo = false;
 
@@ -914,7 +890,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     countDownTimer.cancel();
                 }
 
-                Currentperiod = 401;
+                Currentperiod = 400;
 //                        handleTime.cancel();
                 setTimeAction(currArray);
                 isProgressVideo = false;
@@ -934,7 +910,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     countDownTimer.cancel();
                 }
 
-                Currentperiod = 601;
+                Currentperiod = 600;
                 setTimeAction(currArray);
                 isProgressVideo = false;
 
@@ -952,7 +928,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     countDownTimer.cancel();
                 }
 
-                Currentperiod = 801;
+                Currentperiod = 800;
 //                        handleTime.cancel();
                 setTimeAction(currArray);
                 isProgressVideo = false;
@@ -971,7 +947,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     countDownTimer.cancel();
                 }
 
-                Currentperiod = 1001;
+                Currentperiod = 1000;
 //                        handleTime.cancel();
                 setTimeAction(currArray);
                 isProgressVideo = false;
@@ -988,7 +964,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if(isStartThead){
                     countDownTimer.cancel();
                 }
-                Currentperiod = 1201;
+                Currentperiod = 1200;
 //                        handleTime.cancel();
                 setTimeAction(currArray);
                 isProgressVideo = false;
@@ -1003,24 +979,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             threadTimerProgres.currentThread().interrupt();
         threadTimerProgres = new Thread();
         threadTimerProgres.start();
-    }
-    public void getCurrentperiod(){
-        if(currArray == 0){
-            Currentperiod = 0;
-        }else if(currArray == 1){
-            Currentperiod = 201;
-        }else if(currArray == 2){
-            Currentperiod = 401;
-        }else if(currArray == 3){
-            Currentperiod = 601;
-        }else if(currArray == 4){
-            Currentperiod = 801;
-        }else if(currArray == 5){
-            Currentperiod = 1001;
-        }else if(currArray == 6){
-            Currentperiod = 1201;
-
-        }
     }
 
     @Override

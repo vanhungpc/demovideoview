@@ -79,7 +79,7 @@ public class CircleProgressBar extends ProgressView {
     private void drawStrokeCircle(Canvas canvas) {
 
         canvas.drawOval(rectF, backgroundPaint);
-        angle = 360 * getProgress() / maximum_progress;
+        angle = -360 * getProgress() / maximum_progress;
         canvas.drawArc(rectF, startPosInDegrees, angle, false, foregroundPaint);
         drawText(canvas);
     }

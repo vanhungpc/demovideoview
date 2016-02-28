@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_color">#B0BEC5</color>
-    <color name="progress_color">#1DE9B6</color>
-    <color name="shader_color">#9b9b9b</color>
+    <color name="background_color">#ffffff</color>
+    <color name="progress_color">#ffffff</color>
+    <color name="shader_color">#ffffff</color>
     <declare-styleable name="CircleProgressBar"><attr format="integer" name="progress"/><attr format="color" name="progress_color"/><attr format="color" name="bar_color"/><attr format="dimension" name="progress_width"/><attr format="dimension" name="bar_width"/><attr format="color" name="text_color"/><attr format="dimension" name="text_size"/></declare-styleable>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

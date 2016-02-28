@@ -5,15 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
-    android:padding="5dp"
     android:orientation="vertical">
 
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:gravity="right|center"
+        android:paddingRight="5dp"
+        android:background="@color/colorPrimary"
+        android:layout_height="50dp">
+
+        <LinearLayout
+            android:id="@+id/lnRate"
+            android:orientation="vertical"
+            android:layout_width="80dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:background="@drawable/background_button_rate"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/favorite" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
+        android:gravity="center"
         android:layout_weight="1">
         <VideoView
             android:layout_width="match_parent"
@@ -76,7 +100,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             >
 
             <LinearLayout
@@ -154,19 +178,20 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:background="@color/windowBackground"
-        android:layout_weight="1">
+        android:layout_weight="1.1">
 
 
         <com.natasa.progressviews.CircleProgressBar
             android:id="@+id/circle_progress1"
-            android:layout_width="200dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/circle_progress"
-            android:layout_margin="20dp"
-            app:bar_width="12dp"
+            android:layout_margin="10dp"
+            app:bar_width="6dp"
+            app:bar_color="@color/color_bar_progress"
             app:text_color="@color/color_white"
-            app:progress_color="#d3f115"
-            app:progress_width="10dp" />
+            app:progress_color="@color/color_white"
+            app:progress_width="5dp" />
 
 
     </LinearLayout>

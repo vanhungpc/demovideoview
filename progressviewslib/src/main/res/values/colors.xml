@@ -20,8 +20,8 @@
   -->
 
 <resources>
-    <color name="shader_color">#9b9b9b</color>
-    <color name="progress_color">#1DE9B6</color>
-    <color name="background_color">#B0BEC5</color>
+    <color name="shader_color">#ffffff</color>
+    <color name="progress_color">#ffffff</color>
+    <color name="background_color">#ffffff</color>
 
 </resources>

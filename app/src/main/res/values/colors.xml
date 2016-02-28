@@ -8,4 +8,6 @@
     <color name="navigationBarColor">#362c42</color>
     <color name="color_white">#fff</color>
     <color name="color_black">#000</color>
+    <color name="color_bar_progress">#56558b</color>
+    <color name="color_button_rate">#322a3f</color>
 </resources>

@@ -5,15 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
-    android:padding="10dp"
+
     android:orientation="vertical">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:gravity="right|center"
+        android:paddingRight="15dp"
+        android:background="@color/colorPrimary"
+        android:layout_height="80dp">
+
+        <LinearLayout
+            android:id="@+id/lnRate"
+            android:orientation="vertical"
+            android:layout_width="120dp"
+            android:layout_height="65dp"
+            android:gravity="center"
+            android:background="@drawable/background_button_rate"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:src="@drawable/favorite" />
+        </LinearLayout>
+    </LinearLayout>
+
 
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
+        android:padding="10dp"
+        android:gravity="center"
         android:layout_weight="1">
         <VideoView
             android:layout_width="match_parent"
@@ -159,14 +184,15 @@
 
         <com.natasa.progressviews.CircleProgressBar
             android:id="@+id/circle_progress1"
-            android:layout_width="400dp"
+            android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/circle_progress"
-            android:layout_margin="20dp"
-            app:bar_width="12dp"
+            android:layout_margin="15dp"
+            app:bar_width="10dp"
+            app:bar_color="@color/color_bar_progress"
             app:text_color="@color/color_white"
-            app:progress_color="#d3f115"
-            app:progress_width="10dp" />
+            app:progress_color="@color/color_white"
+            app:progress_width="9dp" />
 
 
     </LinearLayout>
