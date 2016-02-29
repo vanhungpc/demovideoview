@@ -94,6 +94,21 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     private Runnable mRunnable;
     boolean isStopThread = false;
 
+    int time7 = 0;
+    int time66 = 0;
+    int time6 = 0;
+    int time55 = 0;
+    int time5 = 0;
+    int time44 = 0;
+    int time4 = 0;
+    int time33 = 0;
+    int time3 = 0;
+    int time22 = 0;
+    int time2 = 0;
+    int time11 = 0;
+    int time1 = 0;
+    int time0 = 0;
+
 
     Handler updateUIHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -415,6 +430,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 mPlayer.pause();
                 break;
             case R.id.imgNext:
+                mPlayerNextPreview.start();
                 if (isStartThead) {
                     nextAction();
                 }
@@ -422,6 +438,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 break;
 
             case R.id.imgPreview:
+                mPlayerNextPreview.start();
                 if (isStartThead) {
                     previewAction();
                 }
@@ -509,6 +526,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 }
                 break;
             case R.id.circle_progress1:
+                mPlayerNextPreview.start();
                 if (isProgressVideo) {
                     nextAction();
                 }
@@ -719,45 +737,31 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             millisToGo = 0 * 1000 + 7 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 1 && checkCountTimeChange() == 1) {
+        } else if (_currArray == 1 && setDefaultCountTimeChange() == 1) {
             millisToGo = 0 * 1000 + 6 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 2 && checkCountTimeChange() == 1) {
+        } else if (_currArray == 2 && setDefaultCountTimeChange() == 2) {
             millisToGo = 0 * 1000 + 5 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 3 && checkCountTimeChange() == 1) {
+        } else if (_currArray == 3 && setDefaultCountTimeChange() == 3) {
             millisToGo = 0 * 1000 + 4 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 4 && checkCountTimeChange() == 1) {
+        } else if (_currArray == 4 && setDefaultCountTimeChange() == 4) {
             millisToGo = 0 * 1000 + 3 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
-        } else if (_currArray == 5 && checkCountTimeChange() == 1) {
+        } else if (_currArray == 5 && setDefaultCountTimeChange() == 5) {
             millisToGo = 0 * 1000 + 2 * 1000 * 60;
             SetTimeCountDown(millisToGo);
-        } else if (_currArray == 6 && checkCountTimeChange() == 1) {
+        } else if (_currArray == 6 && setDefaultCountTimeChange() == 6) {
             millisToGo = 0 * 1000 + 1 * 1000 * 60;
             SetTimeCountDown(millisToGo);
         }
     }
-    public  int checkCurrCountDownTime(){
-        int time7 = 0;
-        int time66 = 0;
-        int time6 = 0;
-        int time55 = 0;
-        int time5 = 0;
-        int time44 = 0;
-        int time4 = 0;
-        int time33 = 0;
-        int time3 = 0;
-        int time22 = 0;
-        int time2 = 0;
-        int time11 = 0;
-        int time1 = 0;
-        int time0 = 0;
+    public void setValueTime(){
         if(timeOption == 300){
             time7 = 0 * 1000 + 7 * 1000 * 60;
             time66 = 30 * 1000 + 6 * 1000 * 60;
@@ -789,7 +793,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             time1 = 0 * 1000 + 1 * 1000 * 60;
             time0 = 15 * 1000 + 0 * 1000 * 60;
         }
-
+    }
+    public  int checkCurrCountDownTime(){
+        setValueTime();
         int valueTime = 0;
         if(mMillisInFuture >= time66 && mMillisInFuture < time7){
             valueTime =  1;
@@ -835,52 +841,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         return  valueTime;
     }
     public  int checkCountTimeChange(){
-        int time7 = 0;
-        int time66 = 0;
-        int time6 = 0;
-        int time55 = 0;
-        int time5 = 0;
-        int time44 = 0;
-        int time4 = 0;
-        int time33 = 0;
-        int time3 = 0;
-        int time22 = 0;
-        int time2 = 0;
-        int time11 = 0;
-        int time1 = 0;
-        int time0 = 0;
-        if(timeOption == 300){
-            time7 = 0 * 1000 + 7 * 1000 * 60;
-            time66 = 30 * 1000 + 6 * 1000 * 60;
-            time6 = 0 * 1000 + 6 * 1000 * 60;
-            time55 = 30 * 1000 + 5 * 1000 * 60;
-            time5 = 0 * 1000 + 5 * 1000 * 60;
-            time44 = 30 * 1000 + 4 * 1000 * 60;
-            time4 = 0 * 1000 + 4 * 1000 * 60;
-            time33 = 30 * 1000 + 3 * 1000 * 60;
-            time3 = 0 * 1000 + 3 * 1000 * 60;
-            time22 = 30 * 1000 + 2 * 1000 * 60;
-            time2 = 0 * 1000 + 2 * 1000 * 60;
-            time11 = 30 * 1000 + 1 * 1000 * 60;
-            time1 = 0 * 1000 + 1 * 1000 * 60;
-            time0 = 30 * 1000 + 0 * 1000 * 60;
-        }else if(timeOption == 450){
-            time7 = 0 * 1000 + 7 * 1000 * 60;
-            time66 = 15 * 1000 + 6 * 1000 * 60;
-            time6 = 0 * 1000 + 6 * 1000 * 60;
-            time55 = 15 * 1000 + 5 * 1000 * 60;
-            time5 = 0 * 1000 + 5 * 1000 * 60;
-            time44 = 15 * 1000 + 4 * 1000 * 60;
-            time4 = 0 * 1000 + 4 * 1000 * 60;
-            time33 = 15 * 1000 + 3 * 1000 * 60;
-            time3 = 0 * 1000 + 3 * 1000 * 60;
-            time22 = 15 * 1000 + 2 * 1000 * 60;
-            time2 = 0 * 1000 + 2 * 1000 * 60;
-            time11 = 15 * 1000 + 1 * 1000 * 60;
-            time1 = 0 * 1000 + 1 * 1000 * 60;
-            time0 = 15 * 1000 + 0 * 1000 * 60;
-        }
-
+        setValueTime();
         int valueTime = 0;
         if(mMillisInFuture == time66 || mMillisInFuture == time55 ||mMillisInFuture == time44 ||mMillisInFuture == time33 ||mMillisInFuture == time22 ||mMillisInFuture == time11 ||mMillisInFuture == time0){
             valueTime =  1;
@@ -893,9 +854,28 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         }
         return  valueTime;
     }
+    public  int setDefaultCountTimeChange(){
+        setValueTime();
+        int valueTime = 0;
+        if(mMillisInFuture == time66){
+            valueTime =  1;
+        }else if(mMillisInFuture == time55){
+            valueTime =  2;
+        }else if(mMillisInFuture == time44){
+            valueTime =  3;
+        }else if(mMillisInFuture == time33){
+            valueTime =  4;
+        }else if(mMillisInFuture == time22){
+            valueTime =  5;
+        }else if(mMillisInFuture == time11){
+            valueTime =  6;
+        }
+        return  valueTime;
+    }
     public void nextAction() {
         currVideo = 0;
         if (currArray < 6) {
+            currArray++;
             progress = 0;
             circleProgress1.resetProgressBar();
             if (!isStartThead) {
@@ -903,40 +883,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 threadTimerProgres.start();
             } else {
                 Interrupted();
-            }
-
-            if (checkCurrCountDownTime() == 1) {
-                currArray++;
-            }
-            else if (checkCurrCountDownTime() == 2) {
-                currArray = 1;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 3) {
-                currArray++;
-
-            }else if (checkCurrCountDownTime() == 4) {
-                currArray = 2;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 5) {
-                currArray++;
-            }else if (checkCurrCountDownTime() == 6) {
-                currArray = 3;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 7) {
-                currArray++;
-            }else if (checkCurrCountDownTime() == 8) {
-                currArray = 4;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 9) {
-                currArray ++;
-            }else if (checkCurrCountDownTime() == 10) {
-                currArray = 5;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 11) {
-                currArray ++;
-            }else if (checkCurrCountDownTime() == 12) {
-                currArray = 6;
-                currVideo++;
             }
 
             if (currArray == 0) {
@@ -1053,39 +999,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
     public void previewAction() {
         currVideo = 0;
-        if (currArray <= 6 && currArray > 0) {
-            if (checkCurrCountDownTime() == 1) {
-                currArray--;
-            }
-            else if (checkCurrCountDownTime() == 2) {
-                currArray = 1;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 3) {
-                currArray--;
-            }else if (checkCurrCountDownTime() == 4) {
-                currArray = 2;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 5) {
-                currArray--;
-            }else if (checkCurrCountDownTime() == 6) {
-                currArray = 3;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 7) {
-                currArray--;
-            }else if (checkCurrCountDownTime() == 8) {
-                currArray = 4;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 9) {
-                currArray --;
-            }else if (checkCurrCountDownTime() == 10) {
-                currArray = 5;
-                currVideo++;
-            }else if (checkCurrCountDownTime() == 11) {
-                currArray --;
-            }else if (checkCurrCountDownTime() == 12) {
-                currArray = 6;
-                currVideo++;
-            }
+        if (currArray < 6) {
+            currArray--;
             progress = 0;
             circleProgress1.resetProgressBar();
             if (!isStartThead) {
@@ -1094,46 +1009,51 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             } else {
                 Interrupted();
             }
+
             if (currArray == 0) {
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
-
+                currVideo++;
                 playVideo(arrList.get(currVideo));
                 isPlayVideo = true;
                 isPausedVideo = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-                Currentperiod = 0;
-                setTimeAction(currArray, 0);
+
+                millisToGo = 0 * 1000 + 7 * 1000 * 60;
+                SetTimeCountDown(millisToGo);
+
+//                Currentperiod = 0;
+//                setTimeAction(currArray, 0);
                 isProgressVideo = false;
-
-
             } else if (currArray == 1) {
+                imgPlay.setVisibility(View.GONE);
+                imgPause.setVisibility(View.VISIBLE);
                 playVideo(arrList1.get(currVideo));
-                imgPlay.setVisibility(View.GONE);
-                imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
                 isPausedVideo = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-
-                Currentperiod = 200;
-                setTimeAction(currArray, 200);
+//                Currentperiod = 200;
+//                setTimeAction(currArray, 200);
+                millisToGo = 0 * 1000 + 6 * 1000 * 60;
+                SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
-
             } else if (currArray == 2) {
-                playVideo(arrList2.get(currVideo));
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
+                playVideo(arrList2.get(currVideo));
                 isPlayVideo = true;
                 isPausedVideo = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-                Currentperiod = 400;
-                setTimeAction(currArray, 400);
+//                Currentperiod = 400;
+//                setTimeAction(currArray, 400);
+                millisToGo = 0 * 1000 + 5 * 1000 * 60;
+                SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
 
             } else if (currArray == 3) {
@@ -1145,9 +1065,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-
-                Currentperiod = 600;
-                setTimeAction(currArray, 600);
+//                Currentperiod = 600;
+//                setTimeAction(currArray, 600);
+                millisToGo = 0 * 1000 + 4 * 1000 * 60;
+                SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
 
             } else if (currArray == 4) {
@@ -1159,8 +1080,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-                Currentperiod = 800;
-                setTimeAction(currArray, 800);
+//                Currentperiod = 800;
+//                setTimeAction(currArray, 800);
+                millisToGo = 0 * 1000 + 3 * 1000 * 60;
+                SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
 
             } else if (currArray == 5) {
@@ -1172,9 +1095,12 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-                Currentperiod = 1000;
-                setTimeAction(currArray, 1000);
+//                Currentperiod = 1000;
+//                setTimeAction(currArray, 1000);
+                millisToGo = 0 * 1000 + 2 * 1000 * 60;
+                SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
             } else if (currArray == 6) {
                 playVideo(arrList6.get(currVideo));
                 imgPlay.setVisibility(View.GONE);
@@ -1184,10 +1110,13 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-                Currentperiod = 1200;
-                setTimeAction(currArray, 1200);
+//                Currentperiod = 1200;
+//                setTimeAction(currArray, 1200);
+                millisToGo = 0 * 1000 + 1 * 1000 * 60;
+                SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
             }
+
         } else {
             currVideo = 0;
         }

@@ -107,7 +107,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.1"
+            android:layout_weight="1.5"
             >
 
             <LinearLayout
@@ -183,17 +183,17 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center|top"
         android:background="@color/windowBackground"
-        android:layout_weight="1.1">
+        android:layout_weight="1">
 
 
         <com.natasa.progressviews.CircleProgressBar
             android:id="@+id/circle_progress1"
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/circle_progress"
-            android:layout_margin="10dp"
+            android:layout_margin="8dp"
             app:bar_width="6dp"
             app:bar_color="@color/color_bar_progress"
             app:text_color="@color/color_white"
