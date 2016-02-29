@@ -3,6 +3,9 @@ package com.videoview.demoprojectvideoview;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.ThumbnailUtils;
@@ -215,8 +218,16 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     + arrVideo[6];
             arrList6.add(fileName);
         }
-        bmThumbnail = ThumbnailUtils.createVideoThumbnail(arrList.get(currVideo), MediaStore.Video.Thumbnails.MICRO_KIND);
-        mThumbnail.setImageBitmap(bmThumbnail);
+        Uri  videoURI = Uri.parse("android.resource://" + getPackageName() +"/"
+                +R.raw.video1);
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(this, videoURI);
+        Bitmap bitmap = retriever
+                .getFrameAtTime(100000,MediaMetadataRetriever.OPTION_PREVIOUS_SYNC);
+        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+
+        bmThumbnail = ThumbnailUtils.createVideoThumbnail(arrList.get(currVideo), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND);
+        mThumbnail.setImageDrawable(drawable);
 
         mPauseLock = new Object();
         mPaused = false;
