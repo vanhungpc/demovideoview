@@ -160,11 +160,30 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-                if (currArray == 6 && Currentperiod == 1299) {
-
+                if (currArray == 6 && Currentperiod >= 1299) {
+                    Currentperiod = 0;
+                    threadTimerProgres.interrupt();
+                    //updateUIHandler = new Handler();
+                    isPlayVideo = false;
+                    millisToGo = 0 * 1000 + 7 * 1000 * 60;
+                    currArray = 0;
+                    currVideo = 0;
+                    isProgressVideo = false;
+                    circleProgress1.resetProgressBar();
+                    mPlayerFinish.start();
+                    imgPlay.setVisibility(View.VISIBLE);
+                    imgPause.setVisibility(View.GONE);
+                    mVideoView.stopPlayback();
+                    countDownTimer.cancel();
+                    if (timeOption == 450) {
+                        timeOption = 150;
+                    } else if (timeOption == 150) {
+                        timeOption = 450;
+                    } else if (timeOption == 300) {
+                        timeOption = 300;
+                    }
                 } else {
                     isProgressVideo = true;
-                    circleProgress1.setText("00:00");
                     circleProgress1.resetProgressBar();
                 }
 
@@ -633,23 +652,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (Currentperiod >= 1300) {
-            Currentperiod = 0;
-            threadTimerProgres.currentThread().interrupt();
-            updateUIHandler = new Handler();
-            isPlayVideo = false;
-            millisToGo = 0 * 1000 + 7 * 1000 * 60;
-            currArray = 0;
-            currVideo = 0;
-            isProgressVideo = false;
-            circleProgress1.setText("00:00", Color.WHITE);
-            mPlayerFinish.start();
-            imgPlay.setVisibility(View.VISIBLE);
-            imgPause.setVisibility(View.GONE);
-            mVideoView.stopPlayback();
-            countDownTimer.cancel();
-
-
         }
     }
 
@@ -921,6 +923,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         threadTimerProgres = new Thread();
         threadTimerProgres.start();
     }
+
 
     @Override
     public void onStart() {
