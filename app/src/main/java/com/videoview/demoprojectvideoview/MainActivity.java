@@ -15,6 +15,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -114,6 +115,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         public void handleMessage(Message msg) {
             Currentperiod = (Integer.parseInt(msg.obj.toString()));
             progress = msg.what;
+            Log.d("time", ""+mMillisInFuture);
             if(checkCurrCountDownTime() == 15 && currArray == 6){
                 isStartThead = false;
                 isStopThread = true;
@@ -636,14 +638,14 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
     public void autoNextVideo() {
         currVideo = 0;
-        if (checkCurrCountDownTime() == 1/*Currentperiod < 95 && Currentperiod >= 0*/) {
+        if (checkAuToNextDownTime() == 1/*Currentperiod < 95 && Currentperiod >= 0*/) {
             currArray = 0;
             currVideo++;
             playVideo(arrList.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 2/*Currentperiod >= 95 && Currentperiod < 200*/) {
+        } else if (checkAuToNextDownTime() == 2/*Currentperiod >= 95 && Currentperiod < 200*/) {
             currArray = 1;
             currVideo++;
             playVideo(arrList1.get(currVideo));
@@ -651,7 +653,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
 
-        } else if (checkCurrCountDownTime() == 3/*Currentperiod >= 200 && Currentperiod < 295*/) {
+        } else if (checkAuToNextDownTime() == 3/*Currentperiod >= 200 && Currentperiod < 295*/) {
             currArray = 1;
 
             currVideo++;
@@ -659,70 +661,70 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 4/*Currentperiod >= 295 && Currentperiod < 395*/) {
+        } else if (checkAuToNextDownTime() == 4/*Currentperiod >= 295 && Currentperiod < 395*/) {
             currArray = 2;
             currVideo++;
             playVideo(arrList2.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 5/*Currentperiod >= 395 && Currentperiod < 495*/) {
+        } else if (checkAuToNextDownTime() == 5/*Currentperiod >= 395 && Currentperiod < 495*/) {
             currArray = 2;
             currVideo++;
             playVideo(arrList2.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 6/*Currentperiod >= 495 && Currentperiod < 595*/) {
+        } else if (checkAuToNextDownTime() == 6/*Currentperiod >= 495 && Currentperiod < 595*/) {
             currArray = 3;
             currVideo++;
             playVideo(arrList3.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 7) {
+        } else if (checkAuToNextDownTime() == 7) {
             currArray = 3;
             currVideo++;
             playVideo(arrList3.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 8/*Currentperiod >= 695 && Currentperiod < 795*/) {
+        } else if (checkAuToNextDownTime() == 8/*Currentperiod >= 695 && Currentperiod < 795*/) {
             currArray = 4;
             currVideo++;
             playVideo(arrList4.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 9/*Currentperiod >= 795 && Currentperiod < 895*/) {
+        } else if (checkAuToNextDownTime() == 9/*Currentperiod >= 795 && Currentperiod < 895*/) {
             currArray = 4;
             currVideo++;
             playVideo(arrList4.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 10/*Currentperiod >= 895 && Currentperiod < 993*/) {
+        } else if (checkAuToNextDownTime() == 10/*Currentperiod >= 895 && Currentperiod < 993*/) {
             currArray = 5;
             currVideo++;
             playVideo(arrList5.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 11/*Currentperiod >= 993 && Currentperiod < 1090*/) {
+        } else if (checkAuToNextDownTime() == 11/*Currentperiod >= 993 && Currentperiod < 1090*/) {
             currArray = 5;
             currVideo++;
             playVideo(arrList5.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 12/*Currentperiod >= 1090 && Currentperiod < 1195*/) {
+        } else if (checkAuToNextDownTime() == 12/*Currentperiod >= 1090 && Currentperiod < 1195*/) {
             currArray = 6;
             currVideo++;
             playVideo(arrList6.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
-        } else if (checkCurrCountDownTime() == 13/*Currentperiod >= 1195 && Currentperiod < 1300*/) {
+        } else if (checkAuToNextDownTime() == 13/*Currentperiod >= 1195 && Currentperiod < 1300*/) {
             currArray = 6;
             currVideo++;
             playVideo(arrList6.get(currVideo));
@@ -833,9 +835,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         }
         else if(mMillisInFuture >= time0 && mMillisInFuture < time1){
             valueTime = 13;
-        }else if(mMillisInFuture >= 0 && mMillisInFuture < time0){
+        }else if(mMillisInFuture > 1000 && mMillisInFuture < time0){
             valueTime = 14;
-        }else if(mMillisInFuture < 0){
+        }else if(mMillisInFuture <= 1000){
             valueTime = 15;
         }
         return  valueTime;
@@ -851,6 +853,85 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             valueTime =  3;
         }else{
             valueTime = 4;
+        }
+        return  valueTime;
+    }
+    public void setValueTimeAutoNext(){
+        if(timeOption == 300){
+            time7 = 0 * 1000 + 7 * 1000 * 60;
+            time66 = 35 * 1000 + 6 * 1000 * 60;
+            time6 = 0 * 1000 + 6 * 1000 * 60;
+            time55 = 35 * 1000 + 5 * 1000 * 60;
+            time5 = 0 * 1000 + 5 * 1000 * 60;
+            time44 = 35 * 1000 + 4 * 1000 * 60;
+            time4 = 0 * 1000 + 4 * 1000 * 60;
+            time33 = 35 * 1000 + 3 * 1000 * 60;
+            time3 = 0 * 1000 + 3 * 1000 * 60;
+            time22 = 35 * 1000 + 2 * 1000 * 60;
+            time2 = 0 * 1000 + 2 * 1000 * 60;
+            time11 = 35 * 1000 + 1 * 1000 * 60;
+            time1 = 0 * 1000 + 1 * 1000 * 60;
+            time0 = 35 * 1000 + 0 * 1000 * 60;
+        }else if(timeOption == 450 || timeOption == 150){
+            time7 = 0 * 1000 + 7 * 1000 * 60;
+            time66 = 20 * 1000 + 6 * 1000 * 60;
+            time6 = 0 * 1000 + 6 * 1000 * 60;
+            time55 = 20 * 1000 + 5 * 1000 * 60;
+            time5 = 0 * 1000 + 5 * 1000 * 60;
+            time44 = 20 * 1000 + 4 * 1000 * 60;
+            time4 = 0 * 1000 + 4 * 1000 * 60;
+            time33 = 20 * 1000 + 3 * 1000 * 60;
+            time3 = 0 * 1000 + 3 * 1000 * 60;
+            time22 = 20 * 1000 + 2 * 1000 * 60;
+            time2 = 0 * 1000 + 2 * 1000 * 60;
+            time11 = 20 * 1000 + 1 * 1000 * 60;
+            time1 = 0 * 1000 + 1 * 1000 * 60;
+            time0 = 20 * 1000 + 0 * 1000 * 60;
+        }
+    }
+    public  int checkAuToNextDownTime(){
+        setValueTime();
+        int valueTime = 0;
+        if(mMillisInFuture >= time66 && mMillisInFuture < time7){
+            valueTime =  1;
+        }else if(mMillisInFuture >= time6 && mMillisInFuture < time66){
+            valueTime =  2;
+        }else if(mMillisInFuture >= time55 && mMillisInFuture < time6){
+            valueTime =  3;
+        }
+        else if(mMillisInFuture >= time5 && mMillisInFuture < time55){
+            valueTime =  4;
+        }
+        else if(mMillisInFuture >= time44 && mMillisInFuture < time5){
+            valueTime = 5;
+        }
+        else if(mMillisInFuture >= time4 && mMillisInFuture < time44){
+            valueTime =  6;
+        }
+        else if(mMillisInFuture >= time33 && mMillisInFuture < time4){
+            valueTime = 7;
+        }
+        else if(mMillisInFuture >= time3 && mMillisInFuture < time33){
+            valueTime = 8;
+        }
+        else if(mMillisInFuture >= time22 && mMillisInFuture < time3){
+            valueTime = 9;
+        }
+        else if(mMillisInFuture >= time2 && mMillisInFuture < time22){
+            valueTime = 10;
+        }
+        else if(mMillisInFuture >= time11 && mMillisInFuture < time2){
+            valueTime = 11;
+        }
+        else if(mMillisInFuture >= time1 && mMillisInFuture < time11){
+            valueTime = 12;
+        }
+        else if(mMillisInFuture >= time0 && mMillisInFuture < time1){
+            valueTime = 13;
+        }else if(mMillisInFuture > 1000 && mMillisInFuture < time0){
+            valueTime = 14;
+        }else if(mMillisInFuture <= 1000){
+            valueTime = 15;
         }
         return  valueTime;
     }
