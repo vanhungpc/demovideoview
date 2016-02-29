@@ -284,21 +284,31 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     @Override
     protected void onResume() {
         super.onResume();
-//        mVideoView.seekTo(currPossition + 2);
-//        mVideoView.start();
-//        SetTimeCountDown(mMillisInFuture);
-//        isPausedVideo = false;
-    }
+        if(isPauseDevice){
+            mPlayer.start();
+            mVideoView.seekTo(currPossition + 2);
+            mVideoView.start();
+            SetTimeCountDown(mMillisInFuture);
+            isPausedVideo = false;
+            isPauseDevice = false;
+        }
 
+    }
+boolean isPauseDevice = false;
     @Override
     protected void onPause() {
         super.onPause();
-//        currPossition = mVideoView.getCurrentPosition();
-//        mVideoView.pause();
-//        countDownTimer.cancel();
-//        isPausedVideo = true;
-//        mHandler.removeCallbacks(mTimer);
-//        mHandler.removeCallbacksAndMessages(mTimer);
+
+        if(isPlayVideo){
+            mPlayer.pause();
+            currPossition = mVideoView.getCurrentPosition();
+            mVideoView.pause();
+            countDownTimer.cancel();
+            isPausedVideo = true;
+            isPauseDevice = true;
+
+        }
+
     }
 
     private int mMillisInFuture;
