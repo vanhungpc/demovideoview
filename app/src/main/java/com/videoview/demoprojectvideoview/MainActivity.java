@@ -183,7 +183,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     } else if (timeOption == 300) {
                         timeOption = 300;
                     }
-                    circleProgress1.setText("00:00", Color.WHITE);
                 } else {
                     isProgressVideo = true;
                     circleProgress1.resetProgressBar();
@@ -654,6 +653,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             mVideoView.requestFocus();
             mVideoView.start();
             setTimeAction(currArray, Currentperiod);
+        }else{
+            circleProgress1.setText("00:00", Color.WHITE);
         }
     }
 
