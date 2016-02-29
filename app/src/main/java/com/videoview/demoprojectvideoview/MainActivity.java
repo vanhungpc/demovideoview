@@ -162,9 +162,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 }
                 if (currArray == 6 && Currentperiod >= 1299) {
                     Currentperiod = 0;
+                    progress = 0;
                     threadTimerProgres.interrupt();
                     //updateUIHandler = new Handler();
-                    isPlayVideo = false;
+                    isPlayVideo = true;
                     millisToGo = 0 * 1000 + 7 * 1000 * 60;
                     currArray = 0;
                     currVideo = 0;
@@ -182,6 +183,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     } else if (timeOption == 300) {
                         timeOption = 300;
                     }
+                    circleProgress1.setText("00:00", Color.WHITE);
                 } else {
                     isProgressVideo = true;
                     circleProgress1.resetProgressBar();
