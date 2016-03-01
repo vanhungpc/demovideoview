@@ -427,6 +427,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             case R.id.imgNext:
                 mPlayerNextPreview.start();
                 if (isStartThead) {
+                    mPlayer.start();
                     nextAction();
                 }
 
@@ -435,6 +436,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             case R.id.imgPreview:
                 mPlayerNextPreview.start();
                 if (isStartThead) {
+                    mPlayer.start();
                     previewAction();
                 }
 
@@ -450,8 +452,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                     circleProgress1.resetProgressBar();
-                } else {
-                    mPlayer.start();
                 }
 
 //                handleTime.cancel();
@@ -469,6 +469,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 isPlayVideo = true;
                 isPausedVideo = false;
                 SetTimeCountDown(millisToGo);
+                mPlayer.start();
                 if (!isStartThead) {
                     isStartThead = true;
                     threadTimerProgres.start();
@@ -490,8 +491,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (mVideoView.isPlaying() || isStartThead) {
                     countDownTimer.cancel();
                     circleProgress1.resetProgressBar();
-                } else {
-                    mPlayer.start();
                 }
                 btnOption2.setBackgroundResource(R.drawable.background_button_selected);
                 btnOption1.setBackgroundResource(R.drawable.background_button_none);
@@ -500,7 +499,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 playVideo(_video.get_arrList().get(currVideo));
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
-
+                mPlayer.start();
                 isPlayVideo = true;
                 isPausedVideo = false;
                 SetTimeCountDown(millisToGo);
