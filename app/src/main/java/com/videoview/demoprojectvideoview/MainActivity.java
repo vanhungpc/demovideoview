@@ -120,10 +120,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 isStartThead = false;
                 isStopThread = true;
                 Currentperiod = 0;
-                threadTimerProgres.interrupt();
-                threadTimerProgres = new Thread();
-                updateUIHandler.removeCallbacks(null);
-                isPlayVideo = true;
+                isPlayVideo = false;
                 millisToGo = 0 * 1000 + 7 * 1000 * 60;
                 currArray = 0;
                 currVideo = 0;
@@ -134,6 +131,13 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 imgPause.setVisibility(View.GONE);
                 mVideoView.stopPlayback();
                 countDownTimer.cancel();
+                threadTimerProgres.interrupt();
+                threadTimerProgres = new Thread();
+                updateUIHandler.removeCallbacks(null);
+                updateUIHandler.removeMessages(1);
+
+
+                //updateUIHandler = new Handler();
 
             }else{
                 if (checkCountTimeChange() == 1) {
@@ -207,6 +211,11 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (currArray != 6) {
                     isProgressVideo = true;
                     circleProgress1.resetProgressBar();
+                }
+                if(checkCurrCountDownTime() == 15 && currArray == 6){
+                    updateUIHandler.removeMessages(1);
+                    updateUIHandler = new Handler();
+                    Log.d("ttt", ""+mMillisInFuture);
                 }
 
             }
@@ -329,6 +338,7 @@ boolean isPauseDevice = false;
                     cancel();
                 } else {
                     mMillisInFuture = seconds * 1000 + minutes * 1000 * 60;
+                    Log.e("time222", ""+mMillisInFuture);
                     String text = String.format("%d:%02d", minutes, seconds);
                     if(checkCurrCountDownTime() == 14){
                         circleProgress1.setText(text, Color.WHITE);
