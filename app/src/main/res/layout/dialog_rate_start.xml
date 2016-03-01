@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:layout_height="100dp"
+        android:id="@+id/relativeLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:layout_height="85dp">
+
+            <RatingBar android:id="@+id/rating"
+                android:isIndicator="false"
+                android:stepSize="1.0"
+                android:numStars="5"
+                android:rating="0.0"
+                android:progressDrawable="@drawable/ratingbar_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </RatingBar>
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:id="@+id/img_Close"
+                android:src="@drawable/ic_close"
+                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
+                android:layout_alignBottom="@+id/rating"
+                android:layout_toRightOf="@+id/rating"
+                android:layout_toEndOf="@+id/rating"
+                android:layout_marginBottom="26dp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
