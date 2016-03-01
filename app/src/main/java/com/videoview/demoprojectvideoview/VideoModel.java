@@ -12,43 +12,51 @@ public class VideoModel {
             instance = new VideoModel();
         return  instance;
     }
-    private  int[] arrVideo = {R.raw.video1, R.raw.video2, R.raw.video3, R.raw.video4, R.raw.video5, R.raw.video6, R.raw.video7};
-    public void setDefaultVideo(){
+
+    public VideoDTO setDefaultVideo(String resourceName){
         VideoDTO dto = new VideoDTO();
-        for (int i = 0; i < 2; i++) {
-            dto = new VideoDTO();
-            String url_video = dto.get_fileName()+ arrVideo[0];
-            dto.get_arrList().add(url_video);
+        ArrayList<String> arrData = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            String url_video = resourceName  + Constact.arrVideo[0];
+            arrData.add(url_video);
         }
-        for (int i = 0; i < 2; i++) {
-            dto = new VideoDTO();
-            String url_video = dto.get_fileName()+ arrVideo[1];
-            dto.get_arrList1().add(url_video);
+        dto.set_arrList(arrData);
+        ArrayList<String> arrData1 = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            String url_video = resourceName  + Constact.arrVideo[1];
+            arrData1.add(url_video);
         }
-        for (int i = 0; i < 2; i++) {
-            dto = new VideoDTO();
-            String url_video = dto.get_fileName()+ arrVideo[2];
-            dto.get_arrList2().add(url_video);
+        dto.set_arrList1(arrData1);
+        ArrayList<String> arrData2 = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            String url_video = resourceName  + Constact.arrVideo[2];
+            arrData2.add(url_video);
         }
-        for (int i = 0; i < 2; i++) {
-            dto = new VideoDTO();
-            String url_video = dto.get_fileName()+ arrVideo[3];
-            dto.get_arrList3().add(url_video);
+        dto.set_arrList2(arrData2);
+        ArrayList<String> arrData3 = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            String url_video = resourceName  + Constact.arrVideo[3];
+            arrData3.add(url_video);
         }
-        for (int i = 0; i < 2; i++) {
-            dto = new VideoDTO();
-            String url_video = dto.get_fileName()+ arrVideo[4];
-            dto.get_arrList4().add(url_video);
+        dto.set_arrList3(arrData3);
+        ArrayList<String> arrData4 = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            String url_video = resourceName  + Constact.arrVideo[4];
+            arrData4.add(url_video);
         }
-        for (int i = 0; i < 2; i++) {
-            dto = new VideoDTO();
-            String url_video = dto.get_fileName()+ arrVideo[5];
-            dto.get_arrList5().add(url_video);
+        dto.set_arrList4(arrData4);
+        ArrayList<String> arrData5 = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            String url_video = resourceName  + Constact.arrVideo[5];
+            arrData5.add(url_video);
         }
-        for (int i = 0; i < 2; i++) {
-            dto = new VideoDTO();
-            String url_video = dto.get_fileName()+ arrVideo[6];
-            dto.get_arrList6().add(url_video);
+        dto.set_arrList5(arrData5);
+        ArrayList<String> arrData6 = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            String url_video = resourceName  + Constact.arrVideo[6];
+            arrData6.add(url_video);
         }
+        dto.set_arrList6(arrData6);
+        return dto;
     }
 }

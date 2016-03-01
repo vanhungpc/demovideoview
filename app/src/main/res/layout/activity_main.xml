@@ -36,7 +36,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="2dp"
+        android:padding="5dp"
         android:gravity="center"
         android:layout_weight="1">
 
@@ -45,12 +45,18 @@
             android:layout_height="match_parent"
             android:id="@+id/mThumbnail" />
 
+
+
         <VideoView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             android:id="@+id/mVideoView" />
+
     </LinearLayout>
+
+
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -72,15 +78,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="8dp"
                 android:gravity="center">
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="1"
-                    android:textSize="14pt"
-
+                    android:textSize="12pt"
                     android:textColor="@color/color_white"
                     android:background="@drawable/background_button_none"
                     android:id="@+id/btnOption1" />
@@ -91,14 +99,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="8dp"
                 android:gravity="center">
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="2"
-                    android:textSize="14pt"
+                    android:textSize="12pt"
+
                     android:textColor="@color/color_white"
                     android:background="@drawable/background_button_none"
                     android:id="@+id/btnOption2" />

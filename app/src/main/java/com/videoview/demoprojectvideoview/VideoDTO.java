@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * Created by maxmalla006 on 3/1/2016.
  */
 public class VideoDTO {
-    private int[] _arrVideo;
     private String _fileName;
     private  ArrayList<String> _arrList;
     private  ArrayList<String> _arrList1;
@@ -15,16 +14,6 @@ public class VideoDTO {
     private  ArrayList<String> _arrList4;
     private  ArrayList<String> _arrList5;
     private  ArrayList<String> _arrList6;
-    private String _packageName;
-
-
-    public int[] get_arrVideo() {
-        return _arrVideo;
-    }
-
-    public void set_arrVideo(int[] _arrVideo) {
-        this._arrVideo = _arrVideo;
-    }
 
     public String get_fileName() {
         return _fileName;
@@ -88,13 +77,5 @@ public class VideoDTO {
 
     public void set_arrList6(ArrayList<String> _arrList6) {
         this._arrList6 = _arrList6;
-    }
-
-    public String get_packageName() {
-        return _packageName;
-    }
-
-    public void set_packageName(String _packageName) {
-        this._packageName = _packageName;
     }
 }
