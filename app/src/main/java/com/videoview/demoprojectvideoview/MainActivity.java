@@ -215,8 +215,11 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if(checkCurrCountDownTime() == 15 && currArray == 6){
                     updateUIHandler.removeMessages(1);
                     updateUIHandler = new Handler();
-                    Log.d("ttt", ""+mMillisInFuture);
+                    Log.d("ttt", "" + mMillisInFuture);
                 }
+//                if(checkAuToNextDownTime() == 2 || checkAuToNextDownTime() == 4 || checkAuToNextDownTime() == 6 || checkAuToNextDownTime() == 8 || checkAuToNextDownTime() == 10 || checkAuToNextDownTime() == 12 || checkAuToNextDownTime() == 14){
+//                    circleProgress1.setText("NEXT");
+//                }
 
             }
 
@@ -349,7 +352,13 @@ boolean isPauseDevice = false;
                                 circleProgress1.setText(text, Color.WHITE);
                                 isProgressVideo = false;
                             } else if (seconds >= 0 && seconds <= 31) {
-                                circleProgress1.setText("NEXT", Color.WHITE);
+                                if(minutes == 6 || minutes == 5 || minutes == 4 || minutes == 3 || minutes == 2 || minutes == 1 ){
+                                    if(seconds == 30){
+                                        circleProgress1.setText("NEXT", Color.WHITE);
+                                    }
+
+                                }
+//                                circleProgress1.setText("NEXT", Color.WHITE);
                                 isProgressVideo = true;
                             }
                         } else if (timeOption == 450) {
@@ -357,7 +366,13 @@ boolean isPauseDevice = false;
                                 circleProgress1.setText(text, Color.WHITE);
                                 isProgressVideo = false;
                             } else if (seconds >= 0 && seconds <= 16) {
-                                circleProgress1.setText("NEXT", Color.WHITE);
+                                if(minutes == 6 || minutes == 5 || minutes == 4 || minutes == 3 || minutes == 2 || minutes == 1 ){
+                                    if(seconds == 15){
+                                        circleProgress1.setText("NEXT", Color.WHITE);
+                                    }
+
+                                }
+//                                circleProgress1.setText("NEXT", Color.WHITE);
                                 isProgressVideo = true;
                             }
                         } else if (timeOption == 150) {
@@ -365,7 +380,13 @@ boolean isPauseDevice = false;
                                 circleProgress1.setText(text, Color.WHITE);
                                 isProgressVideo = false;
                             } else if (seconds >= 0 && seconds <= 16) {
-                                circleProgress1.setText("NEXT", Color.WHITE);
+                                if(minutes == 6 || minutes == 5 || minutes == 4 || minutes == 3 || minutes == 2 || minutes == 1 ){
+                                    if(seconds == 15){
+                                        circleProgress1.setText("NEXT", Color.WHITE);
+                                    }
+
+                                }
+//                                circleProgress1.setText("NEXT", Color.WHITE);
                                 isProgressVideo = true;
                             }
                         }
