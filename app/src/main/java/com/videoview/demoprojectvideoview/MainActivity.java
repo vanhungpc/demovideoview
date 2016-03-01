@@ -306,7 +306,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         }
 
     }
-boolean isPauseDevice = false;
+
+
+    boolean isPauseDevice = false;
     @Override
     protected void onPause() {
         super.onPause();
@@ -318,10 +320,9 @@ boolean isPauseDevice = false;
             countDownTimer.cancel();
             isPausedVideo = true;
             isPauseDevice = true;
-
         }
-
     }
+
 
     private int mMillisInFuture;
 
