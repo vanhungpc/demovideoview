@@ -110,7 +110,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     int time1 = 0;
     int time0 = 0;
 
-
     Handler updateUIHandler = new Handler() {
         public void handleMessage(Message msg) {
             Currentperiod = (Integer.parseInt(msg.obj.toString()));
@@ -297,14 +296,14 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     protected void onResume() {
         super.onResume();
         mPlayer.start();
-//        if(isPauseDevice){
-//
-//            mVideoView.seekTo(currPossition + 2);
-//            mVideoView.start();
-//            SetTimeCountDown(mMillisInFuture);
-//            isPausedVideo = false;
-//            isPauseDevice = false;
-//        }
+        if(isPauseDevice){
+
+            mVideoView.seekTo(currPossition + 2);
+            mVideoView.start();
+            SetTimeCountDown(mMillisInFuture);
+            isPausedVideo = false;
+            isPauseDevice = false;
+        }
 
     }
 boolean isPauseDevice = false;
@@ -312,15 +311,15 @@ boolean isPauseDevice = false;
     protected void onPause() {
         super.onPause();
         mPlayer.pause();
-//        if(isPlayVideo){
-//
-//            currPossition = mVideoView.getCurrentPosition();
-//            mVideoView.pause();
-//            countDownTimer.cancel();
-//            isPausedVideo = true;
-//            isPauseDevice = true;
-//
-//        }
+        if(isPlayVideo){
+
+            currPossition = mVideoView.getCurrentPosition();
+            mVideoView.pause();
+            countDownTimer.cancel();
+            isPausedVideo = true;
+            isPauseDevice = true;
+
+        }
 
     }
 
@@ -380,7 +379,7 @@ boolean isPauseDevice = false;
                                 circleProgress1.setText(text, Color.WHITE);
                                 isProgressVideo = false;
                             } else if (seconds >= 0 && seconds <= 16) {
-                                if(minutes == 6 || minutes == 5 || minutes == 4 || minutes == 3 || minutes == 2 || minutes == 1 ){
+                                if(minutes == 6 || minutes == 5 || minutes == 4 || minutes == 3 || minutes == 2 || minutes == 1){
                                     if(seconds == 15){
                                         circleProgress1.setText("NEXT", Color.WHITE);
                                     }
