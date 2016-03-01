@@ -79,20 +79,14 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     boolean isPausedVideo = false;
     boolean isProgressVideo = false;
     int timeOption = 300;
-    int timeOption2 = 150;
-    long millisCurr = 0;
     int currPossition = 0;
     int currArray = 0;
-
-    int Currentperiod = 0;
     boolean isStartThead = false;
 
     private Object mPauseLock;
     private boolean mPaused;
     private boolean mFinished;
     Bitmap bmThumbnail;
-    private Handler mHandler;
-    private Runnable mRunnable;
     boolean isStopThread = false;
 
     int time7 = 0;
@@ -112,13 +106,11 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
     Handler updateUIHandler = new Handler() {
         public void handleMessage(Message msg) {
-            Currentperiod = (Integer.parseInt(msg.obj.toString()));
-            progress = msg.what;
+            progress = (Integer.parseInt(msg.obj.toString()));
             Log.d("time", ""+mMillisInFuture);
             if(checkCurrCountDownTime() == 15 && currArray == 6){
                 isStartThead = false;
                 isStopThread = true;
-                Currentperiod = 0;
                 isPlayVideo = false;
                 millisToGo = 0 * 1000 + 7 * 1000 * 60;
                 currArray = 0;
@@ -129,12 +121,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 imgPlay.setVisibility(View.VISIBLE);
                 imgPause.setVisibility(View.GONE);
                 mVideoView.stopPlayback();
-                countDownTimer.cancel();
                 threadTimerProgres.interrupt();
                 threadTimerProgres = new Thread();
                 updateUIHandler.removeCallbacks(null);
-                updateUIHandler.removeMessages(1);
-
+                updateUIHandler.removeMessages(0);
 
                 //updateUIHandler = new Handler();
 
@@ -150,8 +140,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     } else if (timeOption == 300) {
                         timeOption = 300;
                     }
-                } else {
-                    if (checkCountTimeChange() == 2) {
+                } else if (checkCountTimeChange() == 2) {
                         progress = 0;
                         circleProgress1.resetProgressBar();
                         if (timeOption == 450) {
@@ -161,13 +150,12 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                         } else if (timeOption == 300) {
                             timeOption = 300;
                         }
-                    } else if(checkCountTimeChange() == 4){
-                        circleProgress1.setProgress(progress);
-                    }
+                } else if(checkCountTimeChange() != 3){
+                    circleProgress1.setProgress(progress);
+                }
 
 //                circleProgress1.setText("time: "+Currentperiod);
 
-                }
             }
 
 
@@ -206,14 +194,15 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 //                handleTime.cancel();
                 if (mVideoView.isPlaying()) {
                     countDownTimer.cancel();
+
                 }
                 if (currArray != 6) {
-                    isProgressVideo = true;
+
                     circleProgress1.resetProgressBar();
                 }
-                if(checkCurrCountDownTime() == 15 && currArray == 6){
-                    updateUIHandler.removeMessages(1);
-                    updateUIHandler = new Handler();
+                if (checkCurrCountDownTime() == 15 && currArray == 6) {
+                    // updateUIHandler.removeMessages(1);
+                    // updateUIHandler = new Handler();
                     Log.d("ttt", "" + mMillisInFuture);
                 }
 //                if(checkAuToNextDownTime() == 2 || checkAuToNextDownTime() == 4 || checkAuToNextDownTime() == 6 || checkAuToNextDownTime() == 8 || checkAuToNextDownTime() == 10 || checkAuToNextDownTime() == 12 || checkAuToNextDownTime() == 14){
@@ -234,6 +223,11 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         mPlayerStart = MediaPlayer.create(this, R.raw.start);
         mPlayerFinish = MediaPlayer.create(this, R.raw.finish);
         mVideoView.setOnCompletionListener(this);
+
+//        VideoDTO dto = new VideoDTO();
+//        fileName = "android.resource://" + getPackageName() + "/";
+//        dto.set_fileName(fileName);
+//        VideoModel.getInstance().setDefaultVideo();
 
         for (int i = 0; i < 2; i++) {
             fileName = "android.resource://" + getPackageName() + "/"
@@ -284,14 +278,14 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         mPauseLock = new Object();
         mPaused = false;
         mFinished = false;
+        mPlayerStart.start();
+        callIsStopThread();
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -306,7 +300,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         }
 
     }
-boolean isPauseDevice = false;
+
+
+    boolean isPauseDevice = false;
     @Override
     protected void onPause() {
         super.onPause();
@@ -316,10 +312,21 @@ boolean isPauseDevice = false;
             currPossition = mVideoView.getCurrentPosition();
             mVideoView.pause();
             countDownTimer.cancel();
+
             isPausedVideo = true;
             isPauseDevice = true;
 
         }
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(isPauseDevice){
+            finish();
+        }
+
 
     }
 
@@ -490,7 +497,6 @@ boolean isPauseDevice = false;
                 break;
             case R.id.btnOption1:
                 millisToGo = 0 * 1000 + 7 * 1000 * 60;
-                Currentperiod = 0;
                 currArray = 0;
                 timeOption = 300;
                 currVideo = 0;
@@ -529,23 +535,15 @@ boolean isPauseDevice = false;
 
             case R.id.btnOption2:
                 millisToGo = 0 * 1000 + 7 * 1000 * 60;
-                Currentperiod = 0;
                 currArray = 0;
                 timeOption = 450;
                 currVideo = 0;
                 progress = 0;
 
-                if (mVideoView.isPlaying()) {
+                if (mVideoView.isPlaying() || isStartThead) {
                     countDownTimer.cancel();
                     circleProgress1.resetProgressBar();
                 }
-                if (isStartThead) {
-                    countDownTimer.cancel();
-                }
-//                handleTime.cancel();
-//                SetTimeCountDown(millisToGo);
-
-//                setTimerProgres(timeOption);
 
                 btnOption2.setBackgroundResource(R.drawable.background_button_selected);
                 btnOption1.setBackgroundResource(R.drawable.background_button_none);
@@ -582,15 +580,21 @@ boolean isPauseDevice = false;
     //call thread if finish
     public void callIsStopThread(){
         if (timeOption == 450) {
-            timeOption = 150;
+            timeOption = 450;
+            btnOption1.setBackgroundResource(R.drawable.background_button_none);
+            btnOption2.setBackgroundResource(R.drawable.background_button_selected);
         } else if (timeOption == 150) {
             timeOption = 450;
+            btnOption1.setBackgroundResource(R.drawable.background_button_none);
+            btnOption2.setBackgroundResource(R.drawable.background_button_selected);
         } else if (timeOption == 300) {
             timeOption = 300;
+            btnOption1.setBackgroundResource(R.drawable.background_button_selected);
+            btnOption2.setBackgroundResource(R.drawable.background_button_none);
         }
         isStopThread = false;
         millisToGo = 0 * 1000 + 7 * 1000 * 60;
-        Currentperiod = 0;
+        mMillisInFuture = 0 * 1000 + 7 * 1000 * 60;
         currArray = 0;
         currVideo = 0;
         progress = 0;
@@ -599,11 +603,6 @@ boolean isPauseDevice = false;
             countDownTimer.cancel();
             circleProgress1.resetProgressBar();
         }
-
-//                handleTime.cancel();
-//                SetTimeCountDown(millisToGo);
-
-//                setTimerProgres(timeOption);
 
         btnOption1.setBackgroundResource(R.drawable.background_button_selected);
         btnOption2.setBackgroundResource(R.drawable.background_button_none);
@@ -619,7 +618,6 @@ boolean isPauseDevice = false;
             isStartThead = true;
             threadTimerProgres.start();
         } else {
-
             Interrupted();
         }
     }
@@ -632,9 +630,8 @@ boolean isPauseDevice = false;
             while (progress <= timeOption) {
                 if (!isPausedVideo) {
                     progress++;
-                    Currentperiod++;
-                    Message msg = updateUIHandler.obtainMessage(1, Currentperiod);
-                    msg.what = progress;
+                    Message msg = updateUIHandler.obtainMessage(1, progress);
+                    //msg.what = progress;
                     updateUIHandler.sendMessage(msg);
 
 //                    circleProgress1.setProgress(progress);
@@ -685,14 +682,14 @@ boolean isPauseDevice = false;
             playVideo(arrList.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 2/*Currentperiod >= 95 && Currentperiod < 200*/) {
             currArray = 1;
             currVideo++;
             playVideo(arrList1.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
 
         } else if (checkAuToNextDownTime() == 3/*Currentperiod >= 200 && Currentperiod < 295*/) {
             currArray = 1;
@@ -701,105 +698,120 @@ boolean isPauseDevice = false;
             playVideo(arrList1.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 4/*Currentperiod >= 295 && Currentperiod < 395*/) {
             currArray = 2;
             currVideo++;
             playVideo(arrList2.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 5/*Currentperiod >= 395 && Currentperiod < 495*/) {
             currArray = 2;
             currVideo++;
             playVideo(arrList2.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 6/*Currentperiod >= 495 && Currentperiod < 595*/) {
             currArray = 3;
             currVideo++;
             playVideo(arrList3.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 7) {
             currArray = 3;
             currVideo++;
             playVideo(arrList3.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 8/*Currentperiod >= 695 && Currentperiod < 795*/) {
             currArray = 4;
             currVideo++;
             playVideo(arrList4.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 9/*Currentperiod >= 795 && Currentperiod < 895*/) {
             currArray = 4;
             currVideo++;
             playVideo(arrList4.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 10/*Currentperiod >= 895 && Currentperiod < 993*/) {
             currArray = 5;
             currVideo++;
             playVideo(arrList5.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 11/*Currentperiod >= 993 && Currentperiod < 1090*/) {
             currArray = 5;
             currVideo++;
             playVideo(arrList5.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 12/*Currentperiod >= 1090 && Currentperiod < 1195*/) {
             currArray = 6;
             currVideo++;
             playVideo(arrList6.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         } else if (checkAuToNextDownTime() == 13/*Currentperiod >= 1195 && Currentperiod < 1300*/) {
             currArray = 6;
             currVideo++;
             playVideo(arrList6.get(currVideo));
             mVideoView.requestFocus();
             mVideoView.start();
-            setTimeAction(currArray, Currentperiod);
+            //setTimeAction(currArray);
         }
     }
 
-    public void setTimeAction(int _currArray, int _currentperiod) {
+    public void setTimeAction(int _currArray) {
         if (_currArray == 0 && checkCountTimeChange() == 1) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+
             millisToGo = 0 * 1000 + 7 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
         } else if (_currArray == 1 && setDefaultCountTimeChange() == 1) {
+            countDownTimer.cancel();
+            countDownTimer = null;
             millisToGo = 0 * 1000 + 6 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
         } else if (_currArray == 2 && setDefaultCountTimeChange() == 2) {
+            countDownTimer.cancel();
+            countDownTimer = null;
             millisToGo = 0 * 1000 + 5 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
         } else if (_currArray == 3 && setDefaultCountTimeChange() == 3) {
+            countDownTimer.cancel();
+            countDownTimer = null;
             millisToGo = 0 * 1000 + 4 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
         } else if (_currArray == 4 && setDefaultCountTimeChange() == 4) {
+            countDownTimer.cancel();
+            countDownTimer = null;
             millisToGo = 0 * 1000 + 3 * 1000 * 60;
             SetTimeCountDown(millisToGo);
 
         } else if (_currArray == 5 && setDefaultCountTimeChange() == 5) {
+            countDownTimer.cancel();
+            countDownTimer = null;
             millisToGo = 0 * 1000 + 2 * 1000 * 60;
             SetTimeCountDown(millisToGo);
         } else if (_currArray == 6 && setDefaultCountTimeChange() == 6) {
+            countDownTimer.cancel();
+            countDownTimer = null;
             millisToGo = 0 * 1000 + 1 * 1000 * 60;
             SetTimeCountDown(millisToGo);
         }
@@ -892,7 +904,7 @@ boolean isPauseDevice = false;
             valueTime =  2;
         }else if(mMillisInFuture == time0){
             valueTime =  3;
-        }else{
+        }else {
             valueTime = 4;
         }
         return  valueTime;
@@ -997,7 +1009,7 @@ boolean isPauseDevice = false;
     public void nextAction() {
         currVideo = 0;
         if (currArray < 6) {
-            currArray++;
+
             progress = 0;
             circleProgress1.resetProgressBar();
             if (!isStartThead) {
@@ -1006,7 +1018,42 @@ boolean isPauseDevice = false;
             } else {
                 Interrupted();
             }
-
+            if(checkCurrCountDownTime() == 1){
+                //video 1
+                currArray = 1;
+            }else if(checkCurrCountDownTime() == 2){
+                currArray = 2;
+                //video 2
+            }
+            else if(checkCurrCountDownTime() == 3){
+                //video 2
+                currArray ++;
+            }
+            else if(checkCurrCountDownTime() == 4){
+                //video 3
+                currArray = 3;
+            } else if(checkCurrCountDownTime() == 5){
+                //video 3
+                currArray ++;
+            } else if(checkCurrCountDownTime() == 6){
+                //video 4
+                currArray = 4;
+            } else if(checkCurrCountDownTime() == 7){
+                //video 4
+                currArray ++;
+            } else if(checkCurrCountDownTime() == 8){
+                //video 5
+                currArray = 5;
+            } else if(checkCurrCountDownTime() == 9){
+                //video 5
+                currArray ++;
+            } else if(checkCurrCountDownTime() == 10){
+                //video 6
+                currArray = 6;
+            } else if(checkCurrCountDownTime() == 11){
+                //video 6
+                currArray = 6;
+            }
             if (currArray == 0) {
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
@@ -1014,15 +1061,12 @@ boolean isPauseDevice = false;
                 playVideo(arrList.get(currVideo));
                 isPlayVideo = true;
                 isPausedVideo = false;
-                if (isStartThead || mVideoView.isPlaying()) {
+                if (isStartThead) {
                     countDownTimer.cancel();
                 }
 
                 millisToGo = 0 * 1000 + 7 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
-
-//                Currentperiod = 0;
-//                setTimeAction(currArray, 0);
                 isProgressVideo = false;
             } else if (currArray == 1) {
                 imgPlay.setVisibility(View.GONE);
@@ -1030,11 +1074,9 @@ boolean isPauseDevice = false;
                 playVideo(arrList1.get(currVideo));
                 isPlayVideo = true;
                 isPausedVideo = false;
-                if (isStartThead || mVideoView.isPlaying()) {
+                if (isStartThead) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 200;
-//                setTimeAction(currArray, 200);
                 millisToGo = 0 * 1000 + 6 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1044,11 +1086,9 @@ boolean isPauseDevice = false;
                 playVideo(arrList2.get(currVideo));
                 isPlayVideo = true;
                 isPausedVideo = false;
-                if (isStartThead || mVideoView.isPlaying()) {
+                if (isStartThead) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 400;
-//                setTimeAction(currArray, 400);
                 millisToGo = 0 * 1000 + 5 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1059,11 +1099,9 @@ boolean isPauseDevice = false;
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
                 isPausedVideo = false;
-                if (isStartThead || mVideoView.isPlaying()) {
+                if (isStartThead) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 600;
-//                setTimeAction(currArray, 600);
                 millisToGo = 0 * 1000 + 4 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1074,11 +1112,9 @@ boolean isPauseDevice = false;
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
                 isPausedVideo = false;
-                if (isStartThead || mVideoView.isPlaying()) {
+                if (isStartThead) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 800;
-//                setTimeAction(currArray, 800);
                 millisToGo = 0 * 1000 + 3 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1089,11 +1125,9 @@ boolean isPauseDevice = false;
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
                 isPausedVideo = false;
-                if (isStartThead || mVideoView.isPlaying()) {
+                if (isStartThead) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 1000;
-//                setTimeAction(currArray, 1000);
                 millisToGo = 0 * 1000 + 2 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1104,11 +1138,9 @@ boolean isPauseDevice = false;
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
                 isPausedVideo = false;
-                if (isStartThead || mVideoView.isPlaying()) {
+                if (isStartThead) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 1200;
-//                setTimeAction(currArray, 1200);
                 millisToGo = 0 * 1000 + 1 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1146,8 +1178,6 @@ boolean isPauseDevice = false;
                 millisToGo = 0 * 1000 + 7 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
 
-//                Currentperiod = 0;
-//                setTimeAction(currArray, 0);
                 isProgressVideo = false;
             } else if (currArray == 1) {
                 imgPlay.setVisibility(View.GONE);
@@ -1158,8 +1188,6 @@ boolean isPauseDevice = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 200;
-//                setTimeAction(currArray, 200);
                 millisToGo = 0 * 1000 + 6 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1172,8 +1200,6 @@ boolean isPauseDevice = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 400;
-//                setTimeAction(currArray, 400);
                 millisToGo = 0 * 1000 + 5 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1187,8 +1213,6 @@ boolean isPauseDevice = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 600;
-//                setTimeAction(currArray, 600);
                 millisToGo = 0 * 1000 + 4 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1202,8 +1226,6 @@ boolean isPauseDevice = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 800;
-//                setTimeAction(currArray, 800);
                 millisToGo = 0 * 1000 + 3 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1217,8 +1239,6 @@ boolean isPauseDevice = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
                 }
-//                Currentperiod = 1000;
-//                setTimeAction(currArray, 1000);
                 millisToGo = 0 * 1000 + 2 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
@@ -1231,9 +1251,8 @@ boolean isPauseDevice = false;
                 isPausedVideo = false;
                 if (isStartThead || mVideoView.isPlaying()) {
                     countDownTimer.cancel();
+
                 }
-//                Currentperiod = 1200;
-//                setTimeAction(currArray, 1200);
                 millisToGo = 0 * 1000 + 1 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
