@@ -694,7 +694,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 currVideo++;
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList1().get(currVideo), mVideoView);
                 isPlayVideo = true;
                 isPausedVideo = false;
                 if (isStartThead) {
@@ -707,7 +707,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 currVideo++;
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList2().get(currVideo), mVideoView);
                 isPlayVideo = true;
                 isPausedVideo = false;
                 if (isStartThead) {
@@ -719,7 +719,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
             } else if (currArray == 3) {
                 currVideo++;
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList3().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -733,7 +733,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
             } else if (currArray == 4) {
                 currVideo++;
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList4().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -747,7 +747,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
             } else if (currArray == 5) {
                 currVideo++;
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList5().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -761,7 +761,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
             } else if (currArray == 6) {
                 currVideo++;
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList6().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -808,7 +808,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             } else if (currArray == 1) {
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList1().get(currVideo), mVideoView);
                 isPlayVideo = true;
                 isPausedVideo = false;
                 if (isStartThead || mVideoView.isPlaying()) {
@@ -820,7 +820,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
             } else if (currArray == 2) {
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList2().get(currVideo), mVideoView);
                 isPlayVideo = true;
                 isPausedVideo = false;
                 if (isStartThead || mVideoView.isPlaying()) {
@@ -831,7 +831,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 isProgressVideo = false;
 
             } else if (currArray == 3) {
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList3().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -844,7 +844,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 isProgressVideo = false;
 
             } else if (currArray == 4) {
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList4().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -857,7 +857,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 isProgressVideo = false;
 
             } else if (currArray == 5) {
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList5().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
@@ -870,7 +870,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 isProgressVideo = false;
 
             } else if (currArray == 6) {
-                VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
+                VideoHandle.getInstance().playVideo(_video.get_arrList6().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
                 isPlayVideo = true;
