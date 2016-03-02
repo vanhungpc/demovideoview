@@ -1,4 +1,7 @@
-package com.videoview.demoprojectvideoview;
+package com.videoview.demoprojectvideoview.Model;
+
+import com.videoview.demoprojectvideoview.Utils.Constact;
+import com.videoview.demoprojectvideoview.DTO.VideoDTO;
 
 import java.util.ArrayList;
 

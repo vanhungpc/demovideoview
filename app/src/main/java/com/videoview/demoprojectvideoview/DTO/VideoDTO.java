@@ -1,4 +1,4 @@
-package com.videoview.demoprojectvideoview;
+package com.videoview.demoprojectvideoview.DTO;
 
 import java.util.ArrayList;
 

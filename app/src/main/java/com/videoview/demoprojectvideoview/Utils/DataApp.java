@@ -1,4 +1,4 @@
-package com.videoview.demoprojectvideoview;
+package com.videoview.demoprojectvideoview.Utils;
 
 /**
  * Created by Vanhungpc on 3/1/2016.
@@ -43,6 +43,40 @@ public class DataApp {
             Constact.time11 = 15 * 1000 + 1 * 1000 * 60;
             Constact.time1 = 0 * 1000 + 1 * 1000 * 60;
             Constact.time0 = 15 * 1000 + 0 * 1000 * 60;
+        }
+    }
+
+    public void setValueTimerAutoVideo(int timeOption){
+        if(timeOption == 300){
+            Constact.time7 = 0 * 1000 + 7 * 1000 * 60;
+            Constact.time66 = 33 * 1000 + 6 * 1000 * 60;
+            Constact.time6 = 3 * 1000 + 6 * 1000 * 60;
+            Constact.time55 = 33 * 1000 + 5 * 1000 * 60;
+            Constact.time5 = 3 * 1000 + 5 * 1000 * 60;
+            Constact.time44 = 33 * 1000 + 4 * 1000 * 60;
+            Constact.time4 = 3 * 1000 + 4 * 1000 * 60;
+            Constact.time33 = 33 * 1000 + 3 * 1000 * 60;
+            Constact.time3 = 3 * 1000 + 3 * 1000 * 60;
+            Constact.time22 = 33 * 1000 + 2 * 1000 * 60;
+            Constact.time2 = 3 * 1000 + 2 * 1000 * 60;
+            Constact.time11 = 33 * 1000 + 1 * 1000 * 60;
+            Constact.time1 = 3 * 1000 + 1 * 1000 * 60;
+            Constact.time0 = 33 * 1000 + 0 * 1000 * 60;
+        }else if(timeOption == 450 || timeOption == 150){
+            Constact.time7 = 0 * 1000 + 7 * 1000 * 60;
+            Constact.time66 = 18 * 1000 + 6 * 1000 * 60;
+            Constact.time6 = 3 * 1000 + 6 * 1000 * 60;
+            Constact.time55 = 18 * 1000 + 5 * 1000 * 60;
+            Constact.time5 = 3 * 1000 + 5 * 1000 * 60;
+            Constact.time44 = 18 * 1000 + 4 * 1000 * 60;
+            Constact.time4 = 3 * 1000 + 4 * 1000 * 60;
+            Constact.time33 = 18 * 1000 + 3 * 1000 * 60;
+            Constact.time3 = 3 * 1000 + 3 * 1000 * 60;
+            Constact.time22 = 18 * 1000 + 2 * 1000 * 60;
+            Constact.time2 = 3 * 1000 + 2 * 1000 * 60;
+            Constact.time11 = 18 * 1000 + 1 * 1000 * 60;
+            Constact.time1 = 3 * 1000 + 1 * 1000 * 60;
+            Constact.time0 = 18 * 1000 + 0 * 1000 * 60;
         }
     }
 
