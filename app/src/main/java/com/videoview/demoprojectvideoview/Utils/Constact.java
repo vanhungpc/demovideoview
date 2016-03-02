@@ -1,4 +1,6 @@
-package com.videoview.demoprojectvideoview;
+package com.videoview.demoprojectvideoview.Utils;
+
+import com.videoview.demoprojectvideoview.R;
 
 /**
  * Created by Vanhungpc on 3/1/2016.

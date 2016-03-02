@@ -40,18 +40,46 @@
         android:gravity="center"
         android:layout_weight="1">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/mThumbnail" />
+            android:gravity="center">
+<!--
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/mThumbnail" />-->
 
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
-        <VideoView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:id="@+id/mVideoView" />
+                <VideoView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mVideoView" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/lnRateStart"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:visibility="gone"
+                android:layout_alignParentBottom="true">
+
+                <include
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/dialog_rate_start"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -71,7 +99,7 @@
             android:layout_height="match_parent"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_weight="1">
+            android:layout_weight="1.2">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -121,7 +149,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
+            android:layout_weight="1.6"
             >
 
             <LinearLayout
@@ -201,7 +229,7 @@
         android:background="@color/windowBackground"
         android:layout_weight="1">
 
-
+<!--
         <com.natasa.progressviews.CircleProgressBar
             android:id="@+id/circle_progress1"
             android:layout_width="350dp"
@@ -212,7 +240,37 @@
             app:bar_color="@color/color_bar_progress"
             app:text_color="@color/color_white"
             app:progress_color="@color/color_white"
-            app:progress_width="5dp" />
+            app:progress_width="5dp" />-->
+
+
+        <RelativeLayout
+            android:gravity="center|top"
+            android:layout_width="match_parent" android:layout_height="match_parent" >
+
+            <com.videoview.demoprojectvideoview.CustomView.CircleProgressBar
+                android:id="@+id/circleProgress1"
+                android:layout_width="@dimen/progressBar_dimen"
+                android:layout_height="@dimen/progressBar_dimen"
+                app:progress="0"
+                app:progressBarThickness="4dp"
+
+                />
+
+            <TextView
+                android:id="@+id/myTextProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               android:gravity="center"
+                android:textSize="16pt"
+                android:textColor="@color/color_white"
+                android:layout_alignLeft="@id/circleProgress1" android:layout_alignTop="@id/circleProgress1"
+                android:layout_alignRight="@id/circleProgress1" android:layout_alignBottom="@id/circleProgress1"
+                android:background="@android:color/transparent" />
+
+        </RelativeLayout>
+
+
+
 
 
     </LinearLayout>
