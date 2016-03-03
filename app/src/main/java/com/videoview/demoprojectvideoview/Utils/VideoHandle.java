@@ -104,6 +104,7 @@ public class VideoHandle {
         }
     }
 
+
     //play video by url
     public void playVideo(String url, VideoView mVideoView) {
         mVideoView.setVisibility(View.VISIBLE);
