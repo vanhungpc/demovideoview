@@ -1,5 +1,7 @@
 package com.videoview.demoprojectvideoview;
 
+import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
@@ -7,11 +9,13 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +34,8 @@ import com.videoview.demoprojectvideoview.Utils.Constact;
 import com.videoview.demoprojectvideoview.Utils.DataApp;
 import com.videoview.demoprojectvideoview.Utils.TimeSetup;
 import com.videoview.demoprojectvideoview.Utils.VideoHandle;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -98,6 +104,12 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
     Handler updateUIHandler = new Handler() {
         public void handleMessage(Message msg) {
             progress = (Integer.parseInt(msg.obj.toString()));
+            int timeset = TimeSetup.getInstance().checkCountTimeChange(timeOption, mMillisInFuture);
+            int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+            if(timeset == 1 || timeset == 2){
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
+            }
             if (checkCurrCountDownTime() == 15 && currArray == 6) {
                 isStartThead = false;
                 isStopThread = true;
@@ -125,7 +137,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     progress = 0;
 
                 } else if (checkCountTimeChange() != 3) {
-                    circleProgress1.setProgress(progress);
+                    //circleProgress1.setProgress(progress);
                 }
 
             }
@@ -170,21 +182,20 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         mVideoView.setOnCompletionListener(this);
         _video = new VideoDTO();
         _video = VideoModel.getInstance().setDefaultVideo(resourceName);
-//        Uri videoURI = Uri.parse("android.resource://" + getPackageName() + "/"
-//                + R.raw.video1);
-//        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-//        retriever.setDataSource(this, videoURI);
-        /*Bitmap bitmap = retriever
-                .getFrameAtTime(100000, MediaMetadataRetriever.OPTION_PREVIOUS_SYNC);
-        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-        mThumbnail.setImageDrawable(drawable);*/
+
 
         mPauseLock = new Object();
         mPaused = false;
         mFinished = false;
         mPlayerStart.start();
+        setProgressWithAnimation(timeOption*100);
+
+
+
+
         callIsStopThread();
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     @Override
@@ -201,9 +212,20 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         }
 
     }
+    ObjectAnimator objectAnimator;
+    public void setProgressWithAnimation(int duration) {
+        objectAnimator = ObjectAnimator.ofFloat(circleProgress1, "progress", 0.0F, 100.0F);
+        objectAnimator.setDuration(duration);
+        objectAnimator.setInterpolator(new DecelerateInterpolator());
+        objectAnimator.start();
+    }
 
 
     boolean isPauseDevice = false;
+    public int getDuration(){
+        int optionProgress = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+        return optionProgress;
+    }
 
     @Override
     protected void onPause() {
@@ -298,6 +320,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
         }.start();
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -316,6 +339,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
                         SetTimeCountDown(mMillisInFuture);
                         isPausedVideo = false;
+                        objectAnimator.resume();
 //                    synchronized (mPauseLock) {
 //                        mPaused = false;
 //                        mPauseLock.notifyAll();
@@ -335,6 +359,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                     } else {
                         Interrupted();
                     }
+                    mPlayerStart.start();
+                    circleProgress1.clearAnimation();
+                    int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                    setProgressWithAnimation(duration * 100);
                 } else {
                     callIsStopThread();
                 }
@@ -348,6 +376,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 if (mVideoView.isPlaying()) {
                     currPossition = mVideoView.getCurrentPosition();
                     mVideoView.pause();
+                    objectAnimator.pause();
                 }
                 countDownTimer.cancel();
 //                synchronized (mPauseLock) {
@@ -406,7 +435,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
                     Interrupted();
                 }
-
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(timeOption * 100);
 
                 break;
 
@@ -439,6 +469,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
 
                     Interrupted();
                 }
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(timeOption * 100);
                 break;
             case R.id.circleProgress1:
                 mPlayerNextPreview.start();
@@ -690,6 +722,11 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 7 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
+
             } else if (currArray == 1) {
                 currVideo++;
                 imgPlay.setVisibility(View.GONE);
@@ -703,6 +740,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 6 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
             } else if (currArray == 2) {
                 currVideo++;
                 imgPlay.setVisibility(View.GONE);
@@ -716,6 +757,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 5 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
 
             } else if (currArray == 3) {
                 currVideo++;
@@ -731,6 +776,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
 
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
+
             } else if (currArray == 4) {
                 currVideo++;
                 VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
@@ -744,6 +793,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 3 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
 
             } else if (currArray == 5) {
                 currVideo++;
@@ -759,6 +812,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
 
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
+
             } else if (currArray == 6) {
                 currVideo++;
                 VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
@@ -772,6 +829,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 1 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
             }
 
         } else {
@@ -805,6 +866,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 SetTimeCountDown(millisToGo);
 
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
             } else if (currArray == 1) {
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
@@ -817,6 +882,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 6 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
             } else if (currArray == 2) {
                 imgPlay.setVisibility(View.GONE);
                 imgPause.setVisibility(View.VISIBLE);
@@ -829,6 +898,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 5 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
 
             } else if (currArray == 3) {
                 VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
@@ -843,6 +916,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
 
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
+
             } else if (currArray == 4) {
                 VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
@@ -855,6 +932,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 3 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
 
             } else if (currArray == 5) {
                 VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
@@ -869,6 +950,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
 
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
+
             } else if (currArray == 6) {
                 VideoHandle.getInstance().playVideo(_video.get_arrList().get(currVideo), mVideoView);
                 imgPlay.setVisibility(View.GONE);
@@ -882,6 +967,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnCo
                 millisToGo = 0 * 1000 + 1 * 1000 * 60;
                 SetTimeCountDown(millisToGo);
                 isProgressVideo = false;
+
+                int duration = TimeSetup.getInstance().progresBar(timeOption, statusOption, mMillisInFuture);
+                circleProgress1.clearAnimation();
+                setProgressWithAnimation(duration*100);
             }
 
         } else {

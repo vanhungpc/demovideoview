@@ -147,8 +147,10 @@ public class TimeSetup {
 
     public int checkCountTimeChange(int timeOption, int mMillisInFuture) {
         DataApp.getInstance().setValueTimer(timeOption);
+
+
         int valueTime = 0;
-        if (mMillisInFuture == Constact.time66 || mMillisInFuture == Constact.time55 || mMillisInFuture == Constact.time44 || mMillisInFuture == Constact.time33 || mMillisInFuture == Constact.time22 || mMillisInFuture == Constact.time11 || mMillisInFuture == Constact.time0) {
+        if (mMillisInFuture == Constact.time7 || mMillisInFuture == Constact.time66 || mMillisInFuture == Constact.time55 || mMillisInFuture == Constact.time44 || mMillisInFuture == Constact.time33 || mMillisInFuture == Constact.time22 || mMillisInFuture == Constact.time11 || mMillisInFuture == Constact.time0) {
             valueTime = 1;
         } else if (mMillisInFuture == Constact.time6 || mMillisInFuture == Constact.time5 || mMillisInFuture == Constact.time4 || mMillisInFuture == Constact.time3 || mMillisInFuture == Constact.time2 || mMillisInFuture == Constact.time1) {
             valueTime = 2;
